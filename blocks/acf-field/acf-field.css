@@ -1,0 +1,39 @@
+/**
+ * @package: acf-field
+ * CSS for the acf-field block  aka wp-block-oik-testimonials-acf-field
+ */
+
+.acf-field-gallery ul {
+    list-style:none;
+}
+
+.acf-field-gallery ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding-inline-start: 0px;
+
+}
+
+.acf-field-gallery ul > li {
+    flex-basis: 33%;
+    position: relative;
+    cursor: pointer;
+}
+/*
+.acf-field.gallery ul::after {
+    content: "";
+    flex-basis: 20%;
+}
+*/
+
+
+.acf-field-gallery li img {
+    object-fit: cover;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    /*  border-radius: 5px; */
+}
+

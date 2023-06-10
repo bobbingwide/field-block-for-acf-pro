@@ -1,0 +1,13 @@
+{
+  "name": "oik-testimonials/acf-author-name",
+  "title": "Author name",
+  "description": "Displays the Author name of the testimonial ",
+  "category": "formatting",
+  "icon": "businessperson",
+  "keywords": ["author", "name", "acf"],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "acf-author-name.php"
+  },
+  "example": []
+}

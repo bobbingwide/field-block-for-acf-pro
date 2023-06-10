@@ -1,0 +1,14 @@
+{
+  "name": "oik-testimonials/acf-cycler",
+  "title": "Contents cycler",
+  "description": "Cycle display of inner content",
+  "category": "formatting",
+  "icon": "slides",
+  "keywords": ["fade", "cycler", "acf"],
+  "acf": {
+    "mode": "edit",
+    "renderTemplate": "acf-cycler.php"
+  },
+  "style": [ "file:./acf-cycler.css" ],
+  "example": []
+}
