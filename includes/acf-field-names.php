@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gets the possible field names.
  *
@@ -15,13 +16,13 @@
  *
  * @return array
  */
-function acf_get_possible_field_names( $field_name, $post_id ) {
+function acf_field_block_get_possible_field_names( $field_name, $post_id ) {
 	$field_groups = acf_get_field_groups();
 	bw_trace2($field_groups, 'field groups', false );
 	$fields = [];
 	foreach ( $field_groups as $field_group ) {
 		// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
-		$post_types = acf_process_field_group( $field_group );
+		$post_types = acf_field_block_process_field_group( $field_group );
 		if ( $post_types ) {
 			$raw_fields = acf_get_fields( $field_group['ID'] );
 			bw_trace2( $raw_fields, 'raw_fields', false );
@@ -74,7 +75,7 @@ function acf_get_possible_field_names( $field_name, $post_id ) {
 			[value] => (string) "page"
  * ```
  */
-function acf_process_field_group( $field_group ) {
+function acf_field_block_process_field_group( $field_group ) {
 	$post_types = [];
 	$rules = $field_group['location'];
 	foreach ( $rules as $ruleset ) {
@@ -112,8 +113,8 @@ function acf_process_field_group( $field_group ) {
  *
  * @return void
  */
-function acf_list_possible_field_names( $field_name, $post_id ) {
-	$field_names = acf_get_possible_field_names( $field_name, $post_id );
+function acf_field_block_list_possible_field_names( $field_name, $post_id ) {
+	$field_names = acf_field_block_get_possible_field_names( $field_name, $post_id );
 	foreach ( $field_names as $name => $value ) {
 		echo "<br />$name $value";
 	}
@@ -124,7 +125,7 @@ function acf_list_possible_field_names( $field_name, $post_id ) {
  *
  * @return array
  */
-function acf_build_acf_field_name_field() {
+function acf_field_block_build_acf_field_name_field() {
 	$acf_field_name = 	array(
 		'key' => 'field_645f589a88304',
 		'label' => 'ACF Field name',
@@ -149,69 +150,8 @@ function acf_build_acf_field_name_field() {
 	/**
 	 * Set the possible values.
 	 */
-	$acf_field_name['choices'] = acf_get_possible_field_names( '', 0 );
+	$acf_field_name['choices'] = acf_field_block_get_possible_field_names( '', 0 );
 	return $acf_field_name;
-}
-
-/**
- * Defines the Cycler Transition Effect (fx) field.
- *
- * @return array
- */
-function acf_build_acf_cycler_field() {
-	$acf_cycler_field = array(
-	'key' => 'field_645e28e9f47da',
-	'label' => 'Cycle Transition Effect',
-	'name' => 'fx',
-	'aria-label' => '',
-	'type' => 'select',
-	'instructions' => '',
-	'required' => 0,
-	'conditional_logic' => 0,
-	'wrapper' => array(
-		'width' => '',
-		'class' => '',
-		'id' => '',
-	),
-	'choices' => array(
-		'fade' => 'fade',
-		'blindX' => 'blindX',
-		'blindY' => 'blindY',
-		'blindZ' => 'blindZ',
-		'cover' => 'cover',
-		'curtainX' => 'curtainX',
-		'curtainY' => 'curtainY',
-		'fadeZoom' => 'fadeZoom',
-		'growX' => 'growX',
-		'growY' => 'growY',
-		'none' => 'none',
-		'scrollUp' => 'scrollUp',
-		'scrollDown' => 'scrollDown',
-		'scrollLeft' => 'scrollLeft',
-		'scrollRight' => 'scrollRight',
-		'scrollHorz' => 'scrollHorz',
-		'scrollVert' => 'scrollVert',
-		'shuffle' => 'shuffle',
-		'slideX' => 'slideX',
-		'slideY' => 'slideY',
-		'toss' => 'toss',
-		'turnUp' => 'turnUp',
-		'turnDown' => 'turnDown',
-		'turnLeft' => 'turnLeft',
-		'turnRight' => 'turnRight',
-		'uncover' => 'uncover',
-		'wipe' => 'wipe',
-		'zoom' => 'zoom',
-	),
-	'default_value' => 'fade',
-	'return_format' => 'value',
-	'multiple' => 0,
-	'allow_null' => 0,
-	'ui' => 0,
-	'ajax' => 0,
-	'placeholder' => '',
-	);
-	return $acf_cycler_field;
 }
 
 /**
@@ -223,8 +163,8 @@ function acf_build_acf_cycler_field() {
  * @param $field
  * @return mixed
  */
-function acf_prepare_field_name_acf_field_name( $field ) {
-	$field['choices'] = acf_get_possible_field_names( '', 0 );
+function acf_field_block_prepare_field_name_acf_field_name( $field ) {
+	$field['choices'] = acf_field_block_get_possible_field_names( '', 0 );
 	return $field;
 }
 

@@ -18,7 +18,7 @@ bw_trace2( $content, "content", false );
 bw_trace2( $context, "context", false );
 
 
-if ( !function_exists( 'acf_display_field')) {
-	oik_require( 'includes/acf-field.php', 'oik-testimonials' );
+if ( !function_exists( 'acf_field_block_display_field_block')) {
+	require_once __DIR__ . '/../../includes/acf-field.php';
 }
-acf_display_field_block( $block, $content, $is_preview, $post_id, $wp_block );
+acf_field_block_display_field_block( $block, $content, $is_preview, $post_id, $wp_block );

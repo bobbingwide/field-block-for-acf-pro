@@ -9,7 +9,7 @@
 /**
  * Displays classes for ACF field block.
  */
-function acf_display_field_block_classes( $field_name, $field_type, $block ) {
+function acf_field_block_display_field_block_classes( $field_name, $field_type, $block ) {
 	$classes=[ 'acf-field-' . $field_name ];
 	//$classes[] = $field_name;
 	$classes[] = 'acf-type-' .$field_type;
@@ -33,7 +33,7 @@ function acf_display_field_block_classes( $field_name, $field_type, $block ) {
 /**
  * Displays an ACF field block
  */
-function acf_display_field_block( $block, $content, $is_preview, $post_id, $wp_block ) {
+function acf_field_block_display_field_block( $block, $content, $is_preview, $post_id, $wp_block ) {
 	$field_name = get_field( 'acf-field-name');
 	/**
 	 * Cater for blocks that haven't been updated to use acf-field-name
@@ -44,9 +44,11 @@ function acf_display_field_block( $block, $content, $is_preview, $post_id, $wp_b
 
 	}
 	$field_info= get_field_object( $field_name, $post_id );
-	acf_display_field_block_classes( $field_name, $field_info['type'], $block);
-	acf_display_field( $field_name, $field_info, $post_id );
-	echo '</div>';
+    if ( $field_info ) {
+        acf_field_block_display_field_block_classes($field_name, $field_info['type'], $block);
+        acf_field_block_display_field($field_name, $field_info, $post_id);
+        echo '</div>';
+    }
 
 }
 /**
@@ -61,7 +63,7 @@ function acf_display_field_block( $block, $content, $is_preview, $post_id, $wp_b
  *
  * @return void*
  */
-function acf_display_field( $field_name, $field_info, $post_id ) {
+function acf_field_block_display_field( $field_name, $field_info, $post_id ) {
 
 	//$field_name=get_field( 'field-name' );
 	$field     =get_field( $field_name, $post_id );
@@ -74,55 +76,55 @@ function acf_display_field( $field_name, $field_info, $post_id ) {
 				echo esc_html( $field );
 				break;
 			case 'image':
-				acf_display_field_image( $field, $field_info );
+				acf_field_block_display_field_image( $field, $field_info );
 				break;
 
 			case 'email':
-				acf_display_field_email( $field, $field_info );
+				acf_field_block_display_field_email( $field, $field_info );
 				break;
 			case 'url':
-				acf_display_field_url( $field, $field_info );
+				acf_field_block_display_field_url( $field, $field_info );
 				break;
 			case 'file':
-				acf_display_field_file( $field, $field_info );
+				acf_field_block_display_field_file( $field, $field_info );
 				break;
 			case 'wysiwyg':
-				acf_display_field_wysiwyg( $field, $field_info );
+				acf_field_block_display_field_wysiwyg( $field, $field_info );
 				break;
 			case 'oembed':
-				acf_display_field_oembed( $field, $field_info );
+				acf_field_block_display_field_oembed( $field, $field_info );
 				break;
 			case 'gallery':
-				acf_display_field_gallery( $field, $field_info );
+				acf_field_block_display_field_gallery( $field, $field_info );
 				break;
 			case 'checkbox':
 				$field_info['multiple'] = 1;
 			case 'select':
-				acf_display_field_select( $field, $field_info );
+				acf_field_block_display_field_select( $field, $field_info );
 				break;
 			case 'radio':
 			case 'button_group':
 				$field_info['multiple'] = 0;
-				acf_display_field_select( $field, $field_info );
+				acf_field_block_display_field_select( $field, $field_info );
 				break;
 
 			case 'true_false':
-				acf_display_field_true_false( $field, $field_info );
+				acf_field_block_display_field_true_false( $field, $field_info );
 				break;
 			case 'link':
-				acf_display_field_link( $field, $field_info, $post_id );
+				acf_field_block_display_field_link( $field, $field_info, $post_id );
 				break;
 			case 'post_object':
-				acf_display_field_post_object( $field, $field_info, $post_id );
+				acf_field_block_display_field_post_object( $field, $field_info, $post_id );
 				break;
 			case 'page_link':
-				acf_display_field_page_link( $field, $field_info, $post_id );
+				acf_field_block_display_field_page_link( $field, $field_info, $post_id );
 				break;
 			case 'relationship':
-				acf_display_field_relationship( $field, $field_info, $post_id );
+				acf_field_block_display_field_relationship( $field, $field_info, $post_id );
 				break;
 			case 'taxonomy':
-				acf_display_field_taxonomy( $field, $field_info, $post_id );
+				acf_field_block_display_field_taxonomy( $field, $field_info, $post_id );
 				break;
 
 			default:
@@ -137,7 +139,7 @@ function acf_display_field( $field_name, $field_info, $post_id ) {
 		echo 'Perhaps you need to Publish/Update the post';
 		//echo "Field: " . $field;
 		echo '</p>';
-		//acf_list_possible_field_names( $field_name, $post_id );
+		//acf_field_block_list_possible_field_names( $field_name, $post_id );
 
 	}
 }
@@ -160,7 +162,7 @@ function acf_display_field( $field_name, $field_info, $post_id ) {
  *
  * @return void
  */
-function acf_display_field_image( $field, $field_info ) {
+function acf_field_block_display_field_image( $field, $field_info ) {
 	bw_trace2();
 	switch ( $field_info['return_format']) {
 		case 'array':
@@ -195,7 +197,7 @@ function acf_display_field_image( $field, $field_info ) {
  *
  * @return void
  */
-function acf_display_field_email( $field, $field_info) {
+function acf_field_block_display_field_email( $field, $field_info) {
 	//$email = $field
 	echo '<a href="';
 	echo esc_url( 'mailto:' . antispambot( $field ) );
@@ -213,7 +215,7 @@ function acf_display_field_email( $field, $field_info) {
  *
  * @return void
  */
-function acf_display_field_url( $field, $field_info ) {
+function acf_field_block_display_field_url( $field, $field_info ) {
 	echo '<a href="';
 	echo esc_url( $field );
 	echo '">';
@@ -237,7 +239,7 @@ function acf_display_field_url( $field, $field_info ) {
  *
  * @return void
  */
-function acf_display_field_file( $field, $field_info ) {
+function acf_field_block_display_field_file( $field, $field_info ) {
 	bw_trace2();
 	switch ( $field_info['return_format']) {
 		case 'array':
@@ -264,7 +266,7 @@ function acf_display_field_file( $field, $field_info ) {
 /**
  * Displays an ACF WYSIWYG field.
  *
- * We just echo the $field since it's already been processed through `acf_the_content`.
+ * We just echo the $field since it's already been processed through `acf_field_block_the_content`.
  *
  * @link https://www.advancedcustomfields.com/resources/wysiwyg
 
@@ -272,7 +274,7 @@ function acf_display_field_file( $field, $field_info ) {
  * @param $field_info
  * @return void
  */
-function acf_display_field_wysiwyg( $field, $field_info ) {
+function acf_field_block_display_field_wysiwyg( $field, $field_info ) {
 	echo $field;
 	wp_enqueue_script( 'wp-embed');
 }
@@ -288,7 +290,7 @@ function acf_display_field_wysiwyg( $field, $field_info ) {
  * @param $field_info
  * @return void
  */
-function acf_display_field_oembed( $field, $field_info ) {
+function acf_field_block_display_field_oembed( $field, $field_info ) {
 	echo $field;
 	wp_enqueue_script( 'wp-embed');
 }
@@ -305,12 +307,12 @@ function acf_display_field_oembed( $field, $field_info ) {
  * @param $field_info
  * @return void
  */
-function acf_display_field_gallery( $field, $field_info ) {
+function acf_field_block_display_field_gallery( $field, $field_info ) {
 	if ( count( $field ) ) {
 		echo '<ul>';
 		foreach ( $field as $image ) {
 			echo '<li>';
-			acf_display_field_image( $image, $field_info );
+			acf_field_block_display_field_image( $image, $field_info );
 			echo '</li>';
 		}
 		echo '</ul>';
@@ -334,7 +336,7 @@ function acf_display_field_gallery( $field, $field_info ) {
  * @param $field_info
  * @return void
  */
-function acf_display_field_select( $field, $field_info ) {
+function acf_field_block_display_field_select( $field, $field_info ) {
 	bw_trace2();
 	$value = null;
 	switch ( $field_info['return_format'] ) {
@@ -385,7 +387,7 @@ function acf_display_field_select( $field, $field_info ) {
  * @param $field_info
  * @return void
  */
-function acf_display_field_true_false( $field, $field_info ) {
+function acf_field_block_display_field_true_false( $field, $field_info ) {
 	if ( $field) {
 		echo "Yes";
 	} else {
@@ -407,7 +409,7 @@ function acf_display_field_true_false( $field, $field_info ) {
  * @param $post_id
  * @return void
  */
-function acf_display_field_link( $field, $field_info, $post_id ) {
+function acf_field_block_display_field_link( $field, $field_info, $post_id ) {
 
 	if ( 'url' === $field_info['return_format'] ) {
 		$field = get_field( $field_info['name'], $post_id, false );
@@ -415,10 +417,10 @@ function acf_display_field_link( $field, $field_info, $post_id ) {
 	$link_url   =$field['url'];
 	$link_title =$field['title'];
 	$link_target=$field['target'] ? $field['target'] : '_self';
-	acf_display_link( $link_url, $link_title, $link_target );
+	acf_field_block_display_link( $link_url, $link_title, $link_target );
 }
 
-function acf_display_link( $link_url, $link_title, $link_target='_self') {
+function acf_field_block_display_link( $link_url, $link_title, $link_target='_self') {
 	echo '<a href="';
 	echo esc_url( $link_url );
 	echo '" target="';
@@ -440,7 +442,7 @@ function acf_display_link( $link_url, $link_title, $link_target='_self') {
  * @param $post_id
  * @return void
  */
-function acf_display_field_post_object( $field, $field_info, $post_id ) {
+function acf_field_block_display_field_post_object( $field, $field_info, $post_id ) {
 	// Allow for no selection.
 	if ( !$field ) {
 		return;
@@ -461,9 +463,9 @@ function acf_display_field_post_object( $field, $field_info, $post_id ) {
 			}
 			// Page_link fields can include archives which are stored as URLs
 			if ( is_scalar( $post )) {
-				acf_display_link( $post, $post );
+				acf_field_block_display_link( $post, $post );
 			} else {
-				acf_display_link( get_permalink( $post->ID ), $post->post_title );
+				acf_field_block_display_link( get_permalink( $post->ID ), $post->post_title );
 			}
 			if ( $multiple ) {
 				echo '</li>';
@@ -488,7 +490,7 @@ function acf_display_field_post_object( $field, $field_info, $post_id ) {
  * @param $post_id
  * @return void
  */
-function acf_display_field_page_link( $field, $field_info, $post_id ) {
+function acf_field_block_display_field_page_link( $field, $field_info, $post_id ) {
 	// Allow for no selection.
 	if ( !$field ) {
 		return;
@@ -496,7 +498,7 @@ function acf_display_field_page_link( $field, $field_info, $post_id ) {
 	//bw_trace2( $field, "field", true);
 	$field = get_field( $field_info['name'], $post_id, false );
 	//bw_trace2( $field, "field unformatted", true);
-	acf_display_field_post_object( $field, $field_info, $post_id );
+	acf_field_block_display_field_post_object( $field, $field_info, $post_id );
 }
 
 /**
@@ -510,7 +512,7 @@ function acf_display_field_page_link( $field, $field_info, $post_id ) {
  * @param $post_id
  * @return void
  */
-function acf_display_field_relationship( $field, $field_info, $post_id ) {
+function acf_field_block_display_field_relationship( $field, $field_info, $post_id ) {
 	// Allow for no selection.
 	if ( !$field ) {
 		return;
@@ -519,7 +521,7 @@ function acf_display_field_relationship( $field, $field_info, $post_id ) {
 	//bw_trace2( $field, "field", true);
 	//$field = get_field( $field_info['name'], $post_id, false );
 	//bw_trace2( $field, "field unformatted", true);
-	acf_display_field_post_object( $field, $field_info, $post_id );
+	acf_field_block_display_field_post_object( $field, $field_info, $post_id );
 }
 
 /**
@@ -533,7 +535,7 @@ function acf_display_field_relationship( $field, $field_info, $post_id ) {
  * @param $post_id
  * @return void
  */
-function acf_display_field_taxonomy( $field, $field_info, $post_id ) {
+function acf_field_block_display_field_taxonomy( $field, $field_info, $post_id ) {
 	// Allow for no selection.
 	if ( ! $field ) {
 		return;
@@ -565,9 +567,9 @@ function acf_display_field_taxonomy( $field, $field_info, $post_id ) {
 			}
 			// Page_link fields can include archives which are stored as URLs
 			if ( is_scalar( $term ) ) {
-				acf_display_link( $term, $term );
+				acf_field_block_display_link( $term, $term );
 			} else {
-				acf_display_link( get_term_link( $term ), $term->name );
+				acf_field_block_display_link( get_term_link( $term ), $term->name );
 			}
 			if ( $multiple ) {
 				echo '</li>';
