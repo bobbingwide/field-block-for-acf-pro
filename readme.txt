@@ -11,6 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 acf-field block with ACF Pro
 
+The acf-field-block will display individual fields registered using ACF.
+
 If you want to alter the output from the acf-field-block/acf-field block
 then you can hook into the `render_block_acf-field-block/acf-field` filter.
 
@@ -29,7 +31,8 @@ No code solution to display ACF Fields using the ACF Field block
 
 == Changelog ==
 = 0.0.0 =
-* Added: Created from oik-testimonials ( commit 6b2d92c )
+* Changed: Refactored to acf-field block ( acf-field/acf-field ) #1
+* Added: Created from oik-testimonials ( commit 6b2d92c ) #1
 * Tested: With WordPress 6.2.2 and WordPress Multi Site
 * Tested: With Advanced Custom Fields PRO v6.1.6
 * Tested: With PHP 8
