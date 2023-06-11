@@ -78,21 +78,22 @@ function acf_field_block_register_blocks() {
 /**
  * Function performed when acf-field-block.php is loaded
  *
- * If using ACF, use the ACF method of registering things:
- * - on `acf/include_fields` if not already registered
- * - on `acf/init` register the blocks
+ * Registers the `acf-field` group in response to `acf/include_fields`
+ * and the `acf-field/acf-field` block in response to `acf/init`.
  *
  * Note: We can't check the 'ACF' constant until it's defined.
  * ACF PRO is loaded after acf-field-block
  */
 function acf_field_block_plugin_loaded() {
-
-
-		add_action( 'acf/include_fields', 'acf_field_block_acf_include_fields', 11 );
-		//add_action( 'acf/init', 'acf_field_block_acf_init');
-		add_action( 'acf/init', 'acf_field_block_register_blocks');
-		//add_action( 'acf/init', 'acf_field_block_acf_include_fields');
-
+	add_action( 'acf/include_fields', 'acf_field_block_acf_include_fields', 11 );
+	add_action( 'acf/init', 'acf_field_block_register_blocks');
 }
 
 acf_field_block_plugin_loaded();
+
+
+// Dummy trace functions when oik-bwtrace is not activated
+if ( !function_exists( "bw_trace2" ) ) {
+    function bw_trace2( $p=null ) { return $p; }
+    function bw_backtrace() {}
+}
