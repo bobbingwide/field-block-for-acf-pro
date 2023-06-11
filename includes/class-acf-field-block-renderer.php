@@ -686,4 +686,74 @@ class acf_field_block_renderer
         }
     }
 
-}
+    /**
+     * Displays an ACF user field.
+     *
+     *
+     * @link https://www.advancedcustomfields.com/resources/user
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_user( $field, $field_info, $post_id, $acf_field_block_class ) {
+
+        bw_trace2();
+        $multiple = $field_info['multiple'];
+        if ( $multiple ) {
+            echo '<ul>';
+        }
+        switch ( $field_info['return_format']) {
+            case 'array':
+                if ( $multiple ) {
+                    foreach ( $field as $user ) {
+                        //$ids[] = $user['ID'];
+                        echo '<li>';
+                        $this->field_block_display_user( $user['display_name']);
+                        echo '</li>';
+                    }
+                } else {
+                    $this->field_block_display_user( $field['display_name']);
+                }
+                break;
+            case 'object':
+                if ( $multiple ) {
+                    foreach ( $field as $user ) {
+                        //$ids[] = $user->ID;
+                        echo '<li>';
+                        $this->field_block_display_user( $user->display_name);
+                        echo '</li>';
+                    }
+                } else {
+                    //$ids[] = $field->ID;
+                    $this->field_block_display_user( $field->display_name);
+                }
+                break;
+            case 'id':
+                $field = is_array( $field ) ? $field : [$field ];
+                //if ( $field_info['multiple']) {
+                foreach ( $field as $id ) {
+                    $user = get_user_by('id', $id);
+                    if ( $multiple ) {
+                        echo '<li>';
+                    }
+                    $this->field_block_display_user( $user->display_name);
+                    if ( $multiple ) {
+                        echo '</li>';
+                    }
+                }
+                break;
+        }
+        if ( $multiple ) {
+            echo '</ul>';
+        }
+
+
+    }
+
+    function field_block_display_user( $display_name ) {
+        echo esc_html( $display_name );
+    }
+ }
