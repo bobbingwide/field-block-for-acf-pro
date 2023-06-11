@@ -132,7 +132,7 @@ function acf_field_block_build_acf_field_name_field() {
 		'name' => 'acf-field-name',
 		'aria-label' => '',
 		'type' => 'select',
-		'instructions' => 'Select the field name of the ACF field to display',
+		'instructions' => 'Select the field name of the ACF field to display.',
 		'required' => 1,
 		'conditional_logic' => 0,
 		'wrapper' => array(
@@ -167,4 +167,3 @@ function acf_field_block_prepare_field_name_acf_field_name( $field ) {
 	$field['choices'] = acf_field_block_get_possible_field_names( '', 0 );
 	return $field;
 }
-
