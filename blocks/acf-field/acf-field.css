@@ -37,3 +37,11 @@
     /*  border-radius: 5px; */
 }
 
+.acf-field-colour_picker span {
+    padding: 0px 20px;
+    border: 1px solid rgb(126,137,147);
+    border-radius: 3px;
+
+
+}
+

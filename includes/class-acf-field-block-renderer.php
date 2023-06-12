@@ -21,7 +21,8 @@ class acf_field_block_renderer
     private $field_name;
     private $field_info;
 
-    function __construct( $block, $content, $context, $is_preview, $post_id, $wp_block ) {
+    function __construct($block, $content, $context, $is_preview, $post_id, $wp_block)
+    {
         bw_trace2();
         $this->block = $block;
         $this->content = $content;
@@ -32,21 +33,22 @@ class acf_field_block_renderer
         $this->renderer = [$this, 'field_default_renderer'];
     }
 
-    function render() {
+    function render()
+    {
         //echo "Rendering block";
-        $this->field_name = get_field( 'acf-field-name');
+        $this->field_name = get_field('acf-field-name');
         // What if the field name isn't set?
 
-        $this->field_info = get_field_object( $this->field_name, $this->post_id );
-        if ( $this->field_info ) {
-            $this->field = get_field( $this->field_name, $this->post_id );
+        $this->field_info = get_field_object($this->field_name, $this->post_id);
+        if ($this->field_info) {
+            $this->field = get_field($this->field_name, $this->post_id);
             $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
             $this->render_acf_field_contents();
             echo '</div>';
         } else {
             //gob();
             echo $this->field_name;
-            print_r( $this->field_info );
+            print_r($this->field_info);
             echo ':';
             echo $this->post_id;
             echo 'eh?';
@@ -57,25 +59,26 @@ class acf_field_block_renderer
     /**
      * Displays classes for ACF field block.
      */
-    function render_acf_field_classes( $field_name, $field_type, $block ) {
-        $classes=[ 'acf-field-' . $field_name ];
+    function render_acf_field_classes($field_name, $field_type, $block)
+    {
+        $classes = ['acf-field-' . $field_name];
         //$classes[] = $field_name;
-        $classes[] = 'acf-type-' .$field_type;
-        if ( ! empty( $block['className'] ) ) {
-            $classes=array_merge( $classes, explode( ' ', $block['className'] ) );
+        $classes[] = 'acf-type-' . $field_type;
+        if (!empty($block['className'])) {
+            $classes = array_merge($classes, explode(' ', $block['className']));
         }
 
-        $classes=implode( ' ', $classes );
+        $classes = implode(' ', $classes);
         $anchor = $block['anchor'] ?? null;
         //if( !empty( $block['anchor'] ) )
         //	$anchor = ' id="' . sanitize_title( $block['anchor'] ) . '"';
 
         //echo "<div class=\"$classes\">";
-        $wrapper_attributes = get_block_wrapper_attributes( array( 'class' => trim( $classes ), 'id' => $anchor ) );
+        $wrapper_attributes = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor));
         echo '<div ';
         echo $wrapper_attributes;
         echo '>';
-        bw_trace2( $wrapper_attributes, 'wrapper attributes');
+        bw_trace2($wrapper_attributes, 'wrapper attributes');
     }
 
 
@@ -83,26 +86,29 @@ class acf_field_block_renderer
      * Gets the renderer for the field.
      *
      */
-    function get_renderer() {
+    function get_renderer()
+    {
         bw_trace2();
-        $renderer = [ $this, 'render_acf_field_block_' . $this->field_info['type'] ];
-        $renderer = apply_filters( 'acf_field_block_get_renderer', $renderer, $this->field_info, $this->field );
-        if ( !is_callable( $renderer )) {
+        $renderer = [$this, 'render_acf_field_block_' . $this->field_info['type']];
+        $renderer = apply_filters('acf_field_block_get_renderer', $renderer, $this->field_info, $this->field);
+        if (!is_callable($renderer)) {
             $this->not_callable = $renderer;
-            $renderer = [ $this, 'render_acf_field_not_callable' ];
+            $renderer = [$this, 'render_acf_field_not_callable'];
         }
         $this->renderer = $renderer;
         return $renderer;
     }
 
-    function render_acf_field_contents() {
+    function render_acf_field_contents()
+    {
         $this->get_renderer();
         $this->invoke_renderer();
     }
 
-    function invoke_renderer() {
-        $result = call_user_func( $this->renderer, $this->field, $this->field_info, $this->post_id, $this  );
-        if ( false === $result ) {
+    function invoke_renderer()
+    {
+        $result = call_user_func($this->renderer, $this->field, $this->field_info, $this->post_id, $this);
+        if (false === $result) {
             echo "Something went wrong";
         }
 
@@ -113,26 +119,28 @@ class acf_field_block_renderer
      *
      * @return void
      */
-    function render_acf_field_not_callable() {
-        $method = is_array( $this->not_callable) ? get_class( $this->not_callable[0] ) .'::'. $this->not_callable[1] : $this->not_callable;
-        printf( 'Error: Render method not callable: %1$s' ,  $method );
+    function render_acf_field_not_callable()
+    {
+        $method = is_array($this->not_callable) ? get_class($this->not_callable[0]) . '::' . $this->not_callable[1] : $this->not_callable;
+        printf('Error: Render method not callable: %1$s', $method);
         echo '<br />';
-        printf(  'Field: %1$s' , $this->field_name );
+        printf('Field: %1$s', $this->field_name);
         echo '<br />';
         echo "Field type: " . $this->field_info['type'];
     }
 
     /**
      * Renders an ACF text field.
-     * 
+     *
      * @param $field
      * @param $field_info
      * @param $post_id
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_text( $field, $field_info, $post_id, $acf_field_block_class) {
-        echo esc_html( $field );
+    function render_acf_field_block_text($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        echo esc_html($field);
     }
 
     /**
@@ -144,8 +152,9 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_textarea( $field, $field_info, $post_id, $acf_field_block_class) {
-        echo esc_html( $field );
+    function render_acf_field_block_textarea($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        echo esc_html($field);
     }
 
     /**
@@ -157,8 +166,9 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_number( $field, $field_info, $post_id, $acf_field_block_class) {
-        echo esc_html( $field );
+    function render_acf_field_block_number($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        echo esc_html($field);
     }
 
     /**
@@ -170,8 +180,9 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_range( $field, $field_info, $post_id, $acf_field_block_class) {
-        echo esc_html( $field );
+    function render_acf_field_block_range($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        echo esc_html($field);
     }
 
     /**
@@ -183,8 +194,9 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_password( $field, $field_info, $post_id, $acf_field_block_class) {
-        echo esc_html( $field );
+    function render_acf_field_block_password($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        echo esc_html($field);
     }
 
     /**
@@ -197,24 +209,24 @@ class acf_field_block_renderer
      * url | use the URL ASIS. This is the most basic solution.
      *
      * @link https://www.advancedcustomfields.com/resources/image/
-
      * @param $field
      * @param $field_info
      *
      * @return void
      */
-    function render_acf_field_block_image( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_image($field, $field_info, $post_id, $acf_field_block_class)
+    {
         bw_trace2();
-        switch ( $field_info['return_format']) {
+        switch ($field_info['return_format']) {
             case 'array':
                 $image_size = $field_info['preview_size'] ?? 'full';
-                $field_value = wp_get_attachment_image( $field['ID'], $image_size );
+                $field_value = wp_get_attachment_image($field['ID'], $image_size);
                 echo $field_value;
                 break;
 
             case 'id':
                 $image_size = $field_info['preview_size'] ?? 'full';
-                $field_value = wp_get_attachment_image( $field, $image_size );
+                $field_value = wp_get_attachment_image($field, $image_size);
                 echo $field_value;
                 break;
 
@@ -240,12 +252,13 @@ class acf_field_block_renderer
      *
      * @return void
      */
-    function render_acf_field_block_email( $field, $field_info, $post_id, $acf_field_block_class) {
+    function render_acf_field_block_email($field, $field_info, $post_id, $acf_field_block_class)
+    {
         //$email = $field
         echo '<a href="';
-        echo esc_url( 'mailto:' . antispambot( $field ) );
+        echo esc_url('mailto:' . antispambot($field));
         echo '">';
-        echo esc_html( antispambot( $field ) );
+        echo esc_html(antispambot($field));
         echo '</a>';
     }
 
@@ -260,11 +273,12 @@ class acf_field_block_renderer
      *
      * @return void
      */
-    function render_acf_field_block_url( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_url($field, $field_info, $post_id, $acf_field_block_class)
+    {
         echo '<a href="';
-        echo esc_url( $field );
+        echo esc_url($field);
         echo '">';
-        echo esc_attr( $field );
+        echo esc_attr($field);
         echo '</a>';
     }
 
@@ -278,7 +292,6 @@ class acf_field_block_renderer
      * url | use the URL ASIS.
      *
      * @link https://www.advancedcustomfields.com/resources/file
-
      * @param $field
      * @param $field_info
      * @param $post_id
@@ -286,9 +299,10 @@ class acf_field_block_renderer
      *
      * @return void
      */
-    function render_acf_field_block_file( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_file($field, $field_info, $post_id, $acf_field_block_class)
+    {
         bw_trace2();
-        switch ( $field_info['return_format']) {
+        switch ($field_info['return_format']) {
             case 'array':
                 echo '<a href="';
                 echo $field['url'];
@@ -299,8 +313,8 @@ class acf_field_block_renderer
                 break;
 
             case 'id':
-                $url = wp_get_attachment_url( $field );
-                $url = esc_html( $url );
+                $url = wp_get_attachment_url($field);
+                $url = esc_html($url);
                 echo "<a href=\"$url\">Download File</a>";
                 break;
 
@@ -316,16 +330,16 @@ class acf_field_block_renderer
      * We just echo the $field since it's already been processed through `acf_field_block_the_content`.
      *
      * @link https://www.advancedcustomfields.com/resources/wysiwyg
-
      * @param $field
      * @param $field_info
      * @param $post_id
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_wysiwyg( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_wysiwyg($field, $field_info, $post_id, $acf_field_block_class)
+    {
         echo $field;
-        wp_enqueue_script( 'wp-embed');
+        wp_enqueue_script('wp-embed');
     }
 
     /**
@@ -334,16 +348,16 @@ class acf_field_block_renderer
      * Echo the $field and enqueue the wp-embed script for the front end.
      *
      * @link https://www.advancedcustomfields.com/resources/oembed
-
      * @param $field
      * @param $field_info
      * @param $post_id
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_oembed( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_oembed($field, $field_info, $post_id, $acf_field_block_class)
+    {
         echo $field;
-        wp_enqueue_script( 'wp-embed');
+        wp_enqueue_script('wp-embed');
     }
 
     /**
@@ -353,19 +367,19 @@ class acf_field_block_renderer
      * Uses the logic to display an image but within a list.
      *
      * @link https://www.advancedcustomfields.com/add-ons/gallery-field/
-
      * @param $field
      * @param $field_info
      * @param $post_id
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_gallery( $field, $field_info, $post_id, $acf_field_block_class ) {
-        if ( count( $field ) ) {
+    function render_acf_field_block_gallery($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        if (count($field)) {
             echo '<ul>';
-            foreach ( $field as $image ) {
+            foreach ($field as $image) {
                 echo '<li>';
-                $this->render_acf_field_block_image( $image, $field_info, $post_id, $acf_field_block_class );
+                $this->render_acf_field_block_image($image, $field_info, $post_id, $acf_field_block_class);
                 echo '</li>';
             }
             echo '</ul>';
@@ -383,32 +397,32 @@ class acf_field_block_renderer
      * @link https://www.advancedcustomfields.com/resources/checkbox/
      * @link https://www.advancedcustomfields.com/resources/radio-button/
      * @link https://www.advancedcustomfields.com/resources/button-group/
-
      * @param $field
      * @param $field_info
      * @param $post_id
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_select( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_select($field, $field_info, $post_id, $acf_field_block_class)
+    {
         bw_trace2();
         $value = null;
-        switch ( $field_info['return_format'] ) {
+        switch ($field_info['return_format']) {
             case 'value':
-                if ( $field_info['multiple'] ) {
+                if ($field_info['multiple']) {
                     $values = [];
-                    foreach ( $field as $value ) {
-                        $values[] = $field_info['choices'][ $value ];
+                    foreach ($field as $value) {
+                        $values[] = $field_info['choices'][$value];
                     }
-                    $value = implode( ',', $values );
+                    $value = implode(',', $values);
                 } else {
-                    $value = $field_info['choices'][ $field ];
+                    $value = $field_info['choices'][$field];
                 }
                 break;
 
             case 'label':
-                if ( $field_info['multiple'] ) {
-                    $value = implode( ',', $field );
+                if ($field_info['multiple']) {
+                    $value = implode(',', $field);
                 } else {
                     $value = $field;
                 }
@@ -417,17 +431,17 @@ class acf_field_block_renderer
             case 'array':
 
                 $values = [];
-                if ( $field_info['multiple'] ) {
-                    foreach ( $field as $both ) {
+                if ($field_info['multiple']) {
+                    foreach ($field as $both) {
                         $values[] = $both['label'];
                     }
-                    $value = implode( ',', $values ) ;
+                    $value = implode(',', $values);
                 } else {
-                    $value = $field['label'] ;
+                    $value = $field['label'];
                 }
                 break;
         }
-        echo esc_html( $value );
+        echo esc_html($value);
 
     }
 
@@ -440,9 +454,10 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_checkbox( $field, $field_info, $post_id, $acf_field_block_class) {
+    function render_acf_field_block_checkbox($field, $field_info, $post_id, $acf_field_block_class)
+    {
         $field_info['multiple'] = 1;
-        $this->render_acf_field_block_select( $field, $field_info, $post_id, $acf_field_block_class );
+        $this->render_acf_field_block_select($field, $field_info, $post_id, $acf_field_block_class);
     }
 
     /**
@@ -454,9 +469,10 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_radio( $field, $field_info, $post_id, $acf_field_block_class) {
+    function render_acf_field_block_radio($field, $field_info, $post_id, $acf_field_block_class)
+    {
         $field_info['multiple'] = 0;
-        $this->render_acf_field_block_select( $field, $field_info, $post_id, $acf_field_block_class );
+        $this->render_acf_field_block_select($field, $field_info, $post_id, $acf_field_block_class);
     }
 
     /**
@@ -468,9 +484,10 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_button_group( $field, $field_info, $post_id, $acf_field_block_class) {
+    function render_acf_field_block_button_group($field, $field_info, $post_id, $acf_field_block_class)
+    {
         $field_info['multiple'] = 0;
-        $this->render_acf_field_block_select( $field, $field_info, $post_id, $acf_field_block_class );
+        $this->render_acf_field_block_select($field, $field_info, $post_id, $acf_field_block_class);
     }
 
     /**
@@ -486,8 +503,9 @@ class acf_field_block_renderer
      *
      * @return void
      */
-    function render_acf_field_block_true_false( $field, $field_info, $post_id, $acf_field_block_class ) {
-        if ( $field) {
+    function render_acf_field_block_true_false($field, $field_info, $post_id, $acf_field_block_class)
+    {
+        if ($field) {
             echo "Yes";
         } else {
             echo "No";
@@ -509,24 +527,26 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_link( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_link($field, $field_info, $post_id, $acf_field_block_class)
+    {
 
-        if ( 'url' === $field_info['return_format'] ) {
-            $field = get_field( $field_info['name'], $post_id, false );
+        if ('url' === $field_info['return_format']) {
+            $field = get_field($field_info['name'], $post_id, false);
         }
-        $link_url   =$field['url'];
-        $link_title =$field['title'];
-        $link_target=$field['target'] ? $field['target'] : '_self';
-        $this->field_block_display_link( $link_url, $link_title, $link_target );
+        $link_url = $field['url'];
+        $link_title = $field['title'];
+        $link_target = $field['target'] ? $field['target'] : '_self';
+        $this->field_block_display_link($link_url, $link_title, $link_target);
     }
 
-    function field_block_display_link( $link_url, $link_title, $link_target='_self') {
+    function field_block_display_link($link_url, $link_title, $link_target = '_self')
+    {
         echo '<a href="';
-        echo esc_url( $link_url );
+        echo esc_url($link_url);
         echo '" target="';
-        echo esc_attr( $link_target );
+        echo esc_attr($link_target);
         echo '">';
-        echo esc_html( $link_title );
+        echo esc_html($link_title);
         echo '</a>';
     }
 
@@ -543,36 +563,37 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_post_object( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_post_object($field, $field_info, $post_id, $acf_field_block_class)
+    {
         // Allow for no selection.
-        if ( !$field ) {
+        if (!$field) {
             return;
         }
-        $posts= is_array( $field ) ? $field : [ $field ];
+        $posts = is_array($field) ? $field : [$field];
         $multiple = $field_info['multiple'];
-        if ( count( $posts )) {
+        if (count($posts)) {
             //if ( 'object' === $field_info['return_format']) {
-            if ( $multiple ) {
+            if ($multiple) {
                 echo '<ul>';
             }
-            foreach ( $posts as $post ) {
-                if ( is_numeric( $post ) ) {
-                    $post=get_post( $post );
+            foreach ($posts as $post) {
+                if (is_numeric($post)) {
+                    $post = get_post($post);
                 }
-                if ( $multiple ) {
+                if ($multiple) {
                     echo '<li>';
                 }
                 // Page_link fields can include archives which are stored as URLs
-                if ( is_scalar( $post )) {
-                    $this->field_block_display_link( $post, $post );
+                if (is_scalar($post)) {
+                    $this->field_block_display_link($post, $post);
                 } else {
-                    $this->field_block_display_link( get_permalink( $post->ID ), $post->post_title );
+                    $this->field_block_display_link(get_permalink($post->ID), $post->post_title);
                 }
-                if ( $multiple ) {
+                if ($multiple) {
                     echo '</li>';
                 }
             }
-            if ( $multiple ) {
+            if ($multiple) {
                 echo '</ul>';
             }
         }
@@ -592,15 +613,16 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_page_link( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_page_link($field, $field_info, $post_id, $acf_field_block_class)
+    {
         // Allow for no selection.
-        if ( !$field ) {
+        if (!$field) {
             return;
         }
         //bw_trace2( $field, "field", true);
-        $field = get_field( $field_info['name'], $post_id, false );
+        $field = get_field($field_info['name'], $post_id, false);
         //bw_trace2( $field, "field unformatted", true);
-        $this->render_acf_field_block_post_object( $field, $field_info, $post_id, $acf_field_block_class );
+        $this->render_acf_field_block_post_object($field, $field_info, $post_id, $acf_field_block_class);
     }
 
     /**
@@ -615,16 +637,17 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_relationship( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_relationship($field, $field_info, $post_id, $acf_field_block_class)
+    {
         // Allow for no selection.
-        if ( !$field ) {
+        if (!$field) {
             return;
         }
         $field_info['multiple'] = 1;
         //bw_trace2( $field, "field", true);
         //$field = get_field( $field_info['name'], $post_id, false );
         //bw_trace2( $field, "field unformatted", true);
-        $this->render_acf_field_block_post_object( $field, $field_info, $post_id, $acf_field_block_class );
+        $this->render_acf_field_block_post_object($field, $field_info, $post_id, $acf_field_block_class);
     }
 
     /**
@@ -639,17 +662,18 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_taxonomy( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_taxonomy($field, $field_info, $post_id, $acf_field_block_class)
+    {
         // Allow for no selection.
-        if ( ! $field ) {
+        if (!$field) {
             return;
         }
         bw_trace2();
-        $terms   =is_array( $field ) ? $field : [ $field ];
+        $terms = is_array($field) ? $field : [$field];
         // ACF doesn't correctly set the 'multiple' field.
         // So determine the value from the field type.
-        $multiple=$field_info['multiple'];
-        switch ( $field_info['field_type']) {
+        $multiple = $field_info['multiple'];
+        switch ($field_info['field_type']) {
             case 'multi_select':
             case 'checkbox':
                 $multiple = 1;
@@ -658,28 +682,28 @@ class acf_field_block_renderer
             case 'radio':
                 $multiple = 0;
         }
-        if ( count( $terms ) ) {
-            if ( $multiple ) {
+        if (count($terms)) {
+            if ($multiple) {
                 echo '<ul>';
             }
-            foreach ( $terms as $term ) {
-                if ( is_numeric( $term ) ) {
-                    $term=get_term( $term );
+            foreach ($terms as $term) {
+                if (is_numeric($term)) {
+                    $term = get_term($term);
                 }
-                if ( $multiple ) {
+                if ($multiple) {
                     echo '<li>';
                 }
                 // Page_link fields can include archives which are stored as URLs
-                if ( is_scalar( $term ) ) {
-                    $this->field_block_display_link( $term, $term );
+                if (is_scalar($term)) {
+                    $this->field_block_display_link($term, $term);
                 } else {
-                    $this->field_block_display_link( get_term_link( $term ), $term->name );
+                    $this->field_block_display_link(get_term_link($term), $term->name);
                 }
-                if ( $multiple ) {
+                if ($multiple) {
                     echo '</li>';
                 }
             }
-            if ( $multiple ) {
+            if ($multiple) {
                 echo '</ul>';
             }
 
@@ -698,62 +722,128 @@ class acf_field_block_renderer
      * @param $acf_field_block_class
      * @return void
      */
-    function render_acf_field_block_user( $field, $field_info, $post_id, $acf_field_block_class ) {
+    function render_acf_field_block_user($field, $field_info, $post_id, $acf_field_block_class)
+    {
 
         bw_trace2();
         $multiple = $field_info['multiple'];
-        if ( $multiple ) {
+        if ($multiple) {
             echo '<ul>';
         }
-        switch ( $field_info['return_format']) {
+        switch ($field_info['return_format']) {
             case 'array':
-                if ( $multiple ) {
-                    foreach ( $field as $user ) {
+                if ($multiple) {
+                    foreach ($field as $user) {
                         //$ids[] = $user['ID'];
                         echo '<li>';
-                        $this->field_block_display_user( $user['display_name']);
+                        $this->field_block_display_user($user['display_name']);
                         echo '</li>';
                     }
                 } else {
-                    $this->field_block_display_user( $field['display_name']);
+                    $this->field_block_display_user($field['display_name']);
                 }
                 break;
             case 'object':
-                if ( $multiple ) {
-                    foreach ( $field as $user ) {
+                if ($multiple) {
+                    foreach ($field as $user) {
                         //$ids[] = $user->ID;
                         echo '<li>';
-                        $this->field_block_display_user( $user->display_name);
+                        $this->field_block_display_user($user->display_name);
                         echo '</li>';
                     }
                 } else {
                     //$ids[] = $field->ID;
-                    $this->field_block_display_user( $field->display_name);
+                    $this->field_block_display_user($field->display_name);
                 }
                 break;
             case 'id':
-                $field = is_array( $field ) ? $field : [$field ];
+                $field = is_array($field) ? $field : [$field];
                 //if ( $field_info['multiple']) {
-                foreach ( $field as $id ) {
+                foreach ($field as $id) {
                     $user = get_user_by('id', $id);
-                    if ( $multiple ) {
+                    if ($multiple) {
                         echo '<li>';
                     }
-                    $this->field_block_display_user( $user->display_name);
-                    if ( $multiple ) {
+                    $this->field_block_display_user($user->display_name);
+                    if ($multiple) {
                         echo '</li>';
                     }
                 }
                 break;
         }
-        if ( $multiple ) {
+        if ($multiple) {
             echo '</ul>';
         }
 
 
     }
 
-    function field_block_display_user( $display_name ) {
-        echo esc_html( $display_name );
+    function field_block_display_user($display_name)
+    {
+        echo esc_html($display_name);
     }
- }
+
+    /**
+     * Displays an ACF date_picker field.
+     *
+     *
+     * @link https://www.advancedcustomfields.com/resources/date-picker
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_date_picker($field, $field_info, $post_id, $acf_field_block_class) {
+        echo esc_html( $field );
+    }
+
+    /**
+     * Displays an ACF date_time_picker field.
+     *
+     *
+     * @link https://www.advancedcustomfields.com/resources/date-time-picker
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_date_time_picker($field, $field_info, $post_id, $acf_field_block_class) {
+        echo esc_html( $field );
+    }
+    /**
+     * Displays an ACF time_picker field.
+     *
+     * @link https://www.advancedcustomfields.com/resources/time-picker
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_time_picker($field, $field_info, $post_id, $acf_field_block_class) {
+        echo esc_html( $field );
+    }
+    /**
+     * Displays an ACF color_picker field.
+     *
+     * @link https://www.advancedcustomfields.com/resources/color-picker
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_color_picker($field, $field_info, $post_id, $acf_field_block_class) {
+        $field = is_array( $field) ? 'rgba(' . implode( ',', $field) . ')': $field;
+        echo '<span style="background-color: ' . $field . ';">';
+        echo '&nbsp;</span>&nbsp;';
+        echo esc_html( $field );
+
+    }
+}
