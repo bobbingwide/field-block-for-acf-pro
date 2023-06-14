@@ -18,8 +18,9 @@ class acf_field_block_renderer
     private $is_preview;
     private $post_id;
     private $wp_block;
-    private $field_name;
-    private $field_info;
+    private $field_name; // The name of the field to be displayed
+    private $field_info; // Information about the field
+    private $field; // Field value(s)
 
     function __construct($block, $content, $context, $is_preview, $post_id, $wp_block)
     {
@@ -216,7 +217,11 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_image($field, $field_info, $post_id, $acf_field_block_class)
     {
-        bw_trace2();
+        bw_trace2( $field, 'field', false );
+        // Allow for no selection.
+        if (!$field) {
+            return;
+        }
         switch ($field_info['return_format']) {
             case 'array':
                 $image_size = $field_info['preview_size'] ?? 'full';
@@ -529,7 +534,9 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_link($field, $field_info, $post_id, $acf_field_block_class)
     {
-
+        if ( !$field ) {
+            return;
+        }
         if ('url' === $field_info['return_format']) {
             $field = get_field($field_info['name'], $post_id, false);
         }
@@ -846,4 +853,80 @@ class acf_field_block_renderer
         echo esc_html( $field );
 
     }
+    /**
+     * Displays an ACF group field.
+     *
+     * $field contains an array of sub_fields values
+     * $field_info contains 'sub_fields', which is an array of the fields.
+     *
+     * @link https://www.advancedcustomfields.com/resources/group
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_group($field, $field_info, $post_id, $acf_field_block_class) {
+        bw_trace2( $field, "field", false );
+        bw_trace2( $field_info, "field_info", false );
+        //echo esc_html( $field_info['name'] );
+        foreach ( $field_info['sub_fields'] as $sub_field_info ) {
+            $this->field_name = $sub_field_info['name'];
+            //echo $this->field_name;
+            //$this->field = get_sub_field( $sub_field_info['name']);
+            $this->field = $field[$this->field_name ];
+            //echo $this->field;
+            $this->field_info = $sub_field_info;
+            //$this->render_acf_field_contents();
+            $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
+            $this->render_acf_field_contents();
+            echo '</div>';
+        }
+
+
+    }
+
+    /**
+     * Displays an ACF repeater field.
+     *
+     * $field contains a multi dimensional array of sub_fields values.
+     * $field_info contains 'sub_fields', which is an array of the fields.
+     *
+     * @link https://www.advancedcustomfields.com/resources/repeater
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_repeater($field, $field_info, $post_id, $acf_field_block_class) {
+        bw_trace2( $field, "field", false );
+        bw_trace2( $field_info, "field_info", false );
+        //echo esc_html( $field_info['name'] );
+        //echo $this->field_name;
+        if ( $field && count( $field ) ) {
+            echo '<ul>';
+            foreach ($field as $row) {
+                echo '<li>';
+                foreach ($field_info['sub_fields'] as $sub_field_info) {
+
+                    $this->field_name = $sub_field_info['name'];
+                    //echo $this->field_name;
+                    //$this->field = get_sub_field( $sub_field_info['name']);
+                    $this->field = $row[$this->field_name];
+                    //echo $this->field;
+                    $this->field_info = $sub_field_info;
+                    //$this->render_acf_field_contents();
+                    $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
+                    $this->render_acf_field_contents();
+                    echo '</div>';
+                }
+                echo '</li>';
+            }
+            echo '</ul>';
+        }
+    }
+
 }
