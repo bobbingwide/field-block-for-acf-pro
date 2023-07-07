@@ -73,6 +73,9 @@ function acf_field_block_acf_include_fields() {
 function acf_field_block_register_blocks() {
 	$registered = register_block_type( __DIR__ . '/blocks/acf-field' );
 	bw_trace2( $registered, 'registered?', false );
+    // @TODO - Decide if we need logic to set the Google Maps API structure for the `google_map` field type.
+    //acf_add_options_page();
+
 }
 
 /**
