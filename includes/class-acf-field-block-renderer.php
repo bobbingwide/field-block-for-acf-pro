@@ -47,13 +47,15 @@ class acf_field_block_renderer
             $this->render_acf_field_contents();
             echo '</div>';
         } else {
-            //gob();
-            echo $this->field_name;
-            print_r($this->field_info);
-            echo ':';
-            echo $this->post_id;
-            echo 'eh?';
+            $this->render_no_field_info();
         }
+
+    }
+
+    function render_no_field_info() {
+        echo '<p>';
+        printf( __( 'Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id );
+        echo '</p>';
 
     }
 
@@ -306,7 +308,10 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_file($field, $field_info, $post_id, $acf_field_block_class)
     {
-        bw_trace2();
+        if ( !$field ) {
+            return;
+        }
+        //bw_trace2();
         switch ($field_info['return_format']) {
             case 'array':
                 echo '<a href="';
@@ -380,7 +385,7 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_gallery($field, $field_info, $post_id, $acf_field_block_class)
     {
-        if (count($field)) {
+        if ( $field && count($field)) {
             echo '<ul>';
             foreach ($field as $image) {
                 echo '<li>';
@@ -731,8 +736,10 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_user($field, $field_info, $post_id, $acf_field_block_class)
     {
-
-        bw_trace2();
+        if ( !$field ) {
+            return;
+        }
+        // bw_trace2();
         $multiple = $field_info['multiple'];
         if ($multiple) {
             echo '<ul>';
@@ -927,6 +934,47 @@ class acf_field_block_renderer
             }
             echo '</ul>';
         }
+    }
+
+    /**
+     * Displays an ACF flexible content field.
+     *
+     * @link https://www.advancedcustomfields.com/resources/flexible-content
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_flexible_content($field, $field_info, $post_id, $acf_field_block_class) {
+        bw_trace2( $field, "field", false );
+        bw_trace2( $field_info, "field_info", false );
+        //echo esc_html( $field_info['name'] );
+        //echo $this->field_name;
+
+        if ( count( $field_info['layouts'] ) ) {
+            echo '<div>';
+            foreach ($field_info['layouts'] as $layout ) {
+                echo '<div>';
+                foreach ($layout['sub_fields'] as $sub_field_info) {
+
+                    $this->field_name = $sub_field_info['name'];
+                    //echo $this->field_name;
+                    //$this->field = get_sub_field( $sub_field_info['name']);
+                    $this->field = $sub_field_info['value'];
+                    //echo $this->field;
+                    $this->field_info = $sub_field_info;
+                    //$this->render_acf_field_contents();
+                    $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
+                    $this->render_acf_field_contents();
+                    echo '</div>';
+                }
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+
     }
 
 }
