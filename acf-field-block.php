@@ -73,8 +73,6 @@ function acf_field_block_acf_include_fields() {
 function acf_field_block_register_blocks() {
 	$registered = register_block_type( __DIR__ . '/blocks/acf-field' );
 	bw_trace2( $registered, 'registered?', false );
-    // @TODO - Decide if we need logic to set the Google Maps API structure for the `google_map` field type.
-    //acf_add_options_page();
 
 }
 
@@ -90,6 +88,7 @@ function acf_field_block_register_blocks() {
 function acf_field_block_plugin_loaded() {
 	add_action( 'acf/include_fields', 'acf_field_block_acf_include_fields', 11 );
 	add_action( 'acf/init', 'acf_field_block_register_blocks');
+    add_filter( 'acf/fields/google_map/api', 'acf_field_block_fields_google_map_api');
 }
 
 acf_field_block_plugin_loaded();
@@ -99,4 +98,26 @@ acf_field_block_plugin_loaded();
 if ( !function_exists( "bw_trace2" ) ) {
     function bw_trace2( $p=null ) { return $p; }
     function bw_backtrace() {}
+}
+
+/**
+ * May set the Google Maps API key.
+ *
+ * If there's a value passed then we don't need to override it.
+ * The value may have come from a call to `acf_update_setting('google_api_key', $key);`
+ * If not, and there's a value available elsewhere, we can try this.
+ *
+ * @param $api
+ * @return $api
+ */
+function acf_field_block_fields_google_map_api( $api ) {
+    if ( !$api['key'] ) {
+        if ( function_exists( 'bw_get_option' ) ) {
+            $key = bw_get_option("google_maps_api_key");
+            if ($key) {
+                $api['key'] = $key;
+            }
+        }
+    }
+    return $api;
 }
