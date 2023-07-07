@@ -941,6 +941,9 @@ class acf_field_block_renderer
      *
      * @link https://www.advancedcustomfields.com/resources/flexible-content
      *
+     * $field contains the layouts and field values
+     * $field_info contains the array of layouts and sub_fields
+     *
      * @param $field
      * @param $field_info
      * @param $post_id
@@ -953,28 +956,50 @@ class acf_field_block_renderer
         //echo esc_html( $field_info['name'] );
         //echo $this->field_name;
 
-        if ( count( $field_info['layouts'] ) ) {
-            echo '<div>';
-            foreach ($field_info['layouts'] as $layout ) {
-                echo '<div>';
-                foreach ($layout['sub_fields'] as $sub_field_info) {
-
-                    $this->field_name = $sub_field_info['name'];
-                    //echo $this->field_name;
-                    //$this->field = get_sub_field( $sub_field_info['name']);
-                    $this->field = $sub_field_info['value'];
-                    //echo $this->field;
-                    $this->field_info = $sub_field_info;
-                    //$this->render_acf_field_contents();
-                    $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
-                    $this->render_acf_field_contents();
-                    echo '</div>';
-                }
-                echo '</div>';
-            }
+        foreach ( $field as $section ) {
+            $layout_name = $section['acf_fc_layout'];
+            echo '<div class="' . $layout_name . '">';
+            //echo $layout_name;
+            $layout = $this->get_layout( $field_info['layouts'], $layout_name );
+            $this->render_layout( $layout, $section );
             echo '</div>';
         }
+    }
 
+    /**
+     * Returns the layout for the section.
+     *
+     * @param $layouts
+     * @param $layout_name
+     * @return mixed|null
+     */
+    function get_layout( $layouts, $layout_name ) {
+        $layout = null;
+        foreach ( $layouts as $layout_n ) {
+            if ( $layout_name === $layout_n[ 'name']) {
+                $layout = $layout_n;
+            }
+        }
+        return $layout;
+    }
+
+    /**
+     * Renders each of the sub-fields in a layout section.
+     *
+     * @param $layout
+     * @param $section
+     * @return void
+     */
+    function render_layout( $layout, $section ) {
+        foreach ($layout['sub_fields'] as $sub_field_info) {
+            $this->field_name = $sub_field_info['name'];
+             $this->field = $section[ $this->field_name];
+            //echo $this->field;
+            $this->field_info = $sub_field_info;
+            $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
+            $this->render_acf_field_contents();
+            echo '</div>';
+        }
     }
 
 }
