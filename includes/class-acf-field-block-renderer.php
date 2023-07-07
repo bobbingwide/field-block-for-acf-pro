@@ -1002,4 +1002,49 @@ class acf_field_block_renderer
         }
     }
 
+    /**
+     * Displays an ACF clone field.
+     *
+     * @link https://www.advancedcustomfields.com/resources/clone
+     *
+     *
+     * $field contains the field values
+     * $field_info contains the sub_fields
+     *
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_clone( $field, $field_info, $post_id, $acf_field_block_class) {
+        bw_trace2( $field, "field", false );
+        bw_trace2( $field_info, "field_info", false );
+        //echo esc_html( $field_info['name'] );
+        //echo $this->field_name;
+        /*
+        switch ( $field_info['display'] ) {
+            case 'group':
+                echo 'div class="group">';
+                break;
+            default:
+                //echo 'seamless';
+        }
+        */
+        $this->render_layout( $field_info, $field );
+        /*
+        switch ( $field_info['display'] ) {
+            case 'group':
+                echo '</div>';
+                break;
+            default:
+                //echo 'seamless';
+        }
+
+        */
+
+
+    }
+
 }
