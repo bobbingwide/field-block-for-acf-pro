@@ -111,13 +111,18 @@ if ( !function_exists( "bw_trace2" ) ) {
  * @return $api
  */
 function acf_field_block_fields_google_map_api( $api ) {
-    if ( !$api['key'] ) {
-        if ( function_exists( 'bw_get_option' ) ) {
-            $key = bw_get_option("google_maps_api_key");
-            if ($key) {
-                $api['key'] = $key;
-            }
-        }
+    $key = null;
+    if ( isset( $api['key'] ) ) {
+        $key = $api['key'];
     }
+    if ( empty( $key ) ) {
+       if (function_exists('bw_get_option')) {
+           $key = bw_get_option("google_maps_api_key");
+           if ($key) {
+               $api['key'] = $key;
+           }
+       }
+    }
+
     return $api;
 }
