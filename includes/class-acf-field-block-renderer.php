@@ -1047,4 +1047,58 @@ class acf_field_block_renderer
 
     }
 
+    /**
+     * Displays an ACF google_map field.
+     *
+     * @link https://www.advancedcustomfields.com/resources/google_map
+
+     *
+     *
+     *
+     * @param $field
+     * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
+     * @return void
+     */
+    function render_acf_field_block_google_map( $field, $field_info, $post_id, $acf_field_block_class) {
+        bw_trace2( $field, "field", false );
+        bw_trace2( $field_info, "field_info", false );
+        //echo esc_html( $field_info['name'] );
+        // script
+        $api = [];
+        $api = apply_filters( 'acf/fields/google_map/api', $api );
+        bw_trace2( $api, "api", false );
+        if ( $api['key']) {
+            //echo '<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=Function.prototype"></script>';
+            wp_enqueue_script('acf-field-google_map', plugin_dir_url( __FILE__ ) . '/acf-field-google_map.js', array('jquery'));
+            wp_enqueue_script('acf-field_google-maps',
+                sprintf('https://maps.googleapis.com/maps/api/js?key=%s&callback=Function.prototype', $api['key'] ),
+                [
+                    // setup deps, to make sure loaded only after plugin's maps.min.js
+                    'acf-field-google_map'
+                ],
+                null,
+                true
+            );
+        } else {
+            echo "Google Maps API key not set";
+        }
+        $marker_html = $field['address'];
+        //$marker_html .= ' ';
+        //$marker_html .= $field['post_code'];
+        if ( $this->is_preview )  {
+            echo "Google Map goes here.";
+            //echo  '<br />';
+            //echo $marker_html;
+        }
+        $zoom = $field['zoom'];
+        echo '<div class="acf-map" data-zoom="' . $zoom . '">';
+        echo '<div class="marker" data-lat="' . esc_attr($field['lat']) .'" data-lng="' . esc_attr($field['lng']) . '">';
+        echo $marker_html;
+        echo '</div>';
+        echo '</div>';
+
+
+    }
 }
