@@ -337,7 +337,7 @@ class acf_field_block_renderer
     /**
      * Displays an ACF WYSIWYG field.
      *
-     * We just echo the $field since it's already been processed through `acf_field_block_the_content`.
+     * We just echo the $field since it's already been processed through `acf_the_content`.
      *
      * @link https://www.advancedcustomfields.com/resources/wysiwyg
      * @param $field
