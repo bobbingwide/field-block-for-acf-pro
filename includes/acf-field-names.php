@@ -128,7 +128,7 @@ function acf_field_block_list_possible_field_names( $field_name, $post_id ) {
 function acf_field_block_build_acf_field_name_field() {
 	$acf_field_name = 	array(
 		'key' => 'field_645f589a88304',
-		'label' => 'ACF Field name',
+		'label' => 'ACF field name',
 		'name' => 'acf-field-name',
 		'aria-label' => '',
 		'type' => 'select',
