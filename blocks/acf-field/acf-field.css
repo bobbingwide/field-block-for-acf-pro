@@ -3,7 +3,7 @@
  * CSS for the acf-field block  aka wp-block-acf-field-acf-field
  */
 
-.acf-field-gallery ul {
+.acf-field-gallery ul > li {
     list-style:none;
 }
 
