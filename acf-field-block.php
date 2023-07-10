@@ -3,8 +3,8 @@
 Plugin Name: acf-field-block
 Plugin URI: https://www.oik-plugins.com/oik-plugins/acf-field-block
 Description: ACF Field block
-Depends: ACF Pro
-Version: 0.0.0
+Depends: advanced-custom-fields-pro
+Version: 0.1.0
 Author: bobbingwide
 Author URI: https://bobbingwide.com/about-bobbing-wide
 Text Domain: acf-field-block
@@ -66,13 +66,13 @@ function acf_field_block_acf_include_fields() {
 }
 
 /**
- * Registers the ACF Field block.
+ * Registers the ACF field block.
  *
  * @return void
  */
 function acf_field_block_register_blocks() {
 	$registered = register_block_type( __DIR__ . '/blocks/acf-field' );
-	bw_trace2( $registered, 'registered?', false );
+	//bw_trace2( $registered, 'registered?', false );
 
 }
 
