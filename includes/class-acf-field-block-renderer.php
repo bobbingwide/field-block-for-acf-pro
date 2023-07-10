@@ -1062,13 +1062,13 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_google_map( $field, $field_info, $post_id, $acf_field_block_class) {
-        bw_trace2( $field, "field", false );
-        bw_trace2( $field_info, "field_info", false );
+        //bw_trace2( $field, "field", false );
+        //bw_trace2( $field_info, "field_info", false );
         //echo esc_html( $field_info['name'] );
         // script
         $api = [];
         $api = apply_filters( 'acf/fields/google_map/api', $api );
-        bw_trace2( $api, "api", false );
+        // bw_trace2( $api, "api", false );
         if ( $api['key']) {
             //echo '<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=Function.prototype"></script>';
             wp_enqueue_script('acf-field-google_map', plugin_dir_url( __FILE__ ) . '/acf-field-google_map.js', array('jquery'));
