@@ -1084,21 +1084,25 @@ class acf_field_block_renderer
         } else {
             echo "Google Maps API key not set";
         }
-        $marker_html = $field['address'];
-        //$marker_html .= ' ';
-        //$marker_html .= $field['post_code'];
+
+        $lat = $field['lat'] ?? null;
+        $lng = $field['lng'] ?? null;
         if ( $this->is_preview )  {
-            echo "Google Map goes here.";
-            //echo  '<br />';
-            //echo $marker_html;
+            if ( $lat && $lng ) {
+                echo "Google Map goes here.";
+            } else {
+                echo "Please set the address for this Google Maps map";
+            }
+
         }
-        $zoom = $field['zoom'];
-        echo '<div class="acf-map" data-zoom="' . $zoom . '">';
-        echo '<div class="marker" data-lat="' . esc_attr($field['lat']) .'" data-lng="' . esc_attr($field['lng']) . '">';
-        echo $marker_html;
-        echo '</div>';
-        echo '</div>';
-
-
+        if ( $lat && $lng ) {
+            $marker_html = $field['address'] ?? '';
+            $zoom = $field['zoom'] ?? 14;
+            echo '<div class="acf-map" data-zoom="' . $zoom . '">';
+            echo '<div class="marker" data-lat="' . esc_attr($lat) . '" data-lng="' . esc_attr($lng ) . '">';
+            echo $marker_html;
+            echo '</div>';
+            echo '</div>';
+        }
     }
 }
