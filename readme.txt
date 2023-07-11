@@ -4,12 +4,12 @@ Donate link: https://www.oik-plugins.com/oik/oik-donate/
 Tags: ACF, field, block
 Requires at least: 6.2
 Tested up to: 6.2.2
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-No code solution to display ACF Fields using the ACF field block.
+No code solution to display ACF fields using the ACF field block.
 The ACF field block displays individual fields registered using ACF.
 
 It supports the following field types:
@@ -28,7 +28,7 @@ Features
 - Most field types are rendered in the block editor.
 
 
-This plugin depends on Advanced Custom Fields PRO; it uses the plugin's block logic.
+This plugin depends on Advanced Custom Fields PRO; it uses the plugin's server side rendering block logic.
 
 
 For PHP developers
@@ -50,15 +50,22 @@ for a field type or specific field.
 1. Activate the acf-field-block plugin through the 'Plugins' menu in WordPress
 1. Use the ACF field block
 
-
 == Screenshots ==
-1. acf-field-block in action
+1. ACF field block - Edit mode 
+1. ACF field block - Preview mode
+1. ACF field block - Settings
 
 == Upgrade Notice ==
+= 0.1.1 = 
+Internationalized and localized for UK English.
+
 = 0.1.0 =
 No code solution to display ACF Fields using the ACF field block
 
 == Changelog ==
+= 0.1.1 = 
+* Changed: Internationalize and localize into UK English and bb_BB locale #11
+
 = 0.1.0 = 
 * Added: google_map field type #10
 * Changed: Don't handle fields with no name #3
