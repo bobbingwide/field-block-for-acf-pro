@@ -5,6 +5,7 @@
   "category": "formatting",
   "icon": "forms",
   "keywords": ["generic", "field", "acf"],
+  "textdomain": "acf-field-block",
   "acf": {
     "mode": "edit",
     "renderTemplate": "acf-field.php"
