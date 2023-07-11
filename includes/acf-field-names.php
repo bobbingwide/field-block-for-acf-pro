@@ -134,11 +134,11 @@ function acf_field_block_list_possible_field_names( $field_name, $post_id ) {
 function acf_field_block_build_acf_field_name_field() {
 	$acf_field_name = 	array(
 		'key' => 'field_645f589a88304',
-		'label' => 'ACF field name',
+		'label' => __('ACF field name', 'acf-field-block' ),
 		'name' => 'acf-field-name',
 		'aria-label' => '',
 		'type' => 'select',
-		'instructions' => 'Select the field name of the ACF field to display.',
+		'instructions' => __('Select the field name of the ACF field to display.', 'acf-field-block' ),
 		'required' => 1,
 		'conditional_logic' => 0,
 		'wrapper' => array(
@@ -148,7 +148,7 @@ function acf_field_block_build_acf_field_name_field() {
 		),
 		'default_value' => '',
 		'maxlength' => '',
-		'placeholder' => 'ACF_field_name',
+		'placeholder' => __('ACF_field_name', 'acf-field-block' ),
 		'prepend' => '',
 		'append' => '',
 	);
