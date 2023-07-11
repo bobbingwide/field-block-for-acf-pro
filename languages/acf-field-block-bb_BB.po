@@ -1,22 +1,20 @@
-# Copyright (C) 2023 acf-field-block
-# This file is distributed under the same license as the acf-field-block package.
+# Copyright (C) 2023 bobbingwide
+# This file is distributed under the GPL2.
 msgid ""
 msgstr ""
 "Project-Id-Version: acf-field-block 0.1.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/acf-field-block\n"
-"POT-Creation-Date: 2023-07-11 08:42:49+00:00\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-field-block\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Language: bb_BB\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2023-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-#: includes/class-acf-field-block-renderer.php:57
-msgid "Field %1$s not set for post ID %2$d"
-msgstr "Feild %1$s nOt sEt fOr psot ID %2$d"
-
+"POT-Creation-Date: 2023-07-11T20:47:15+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: acf-field-block\n"
 msgid "acf-field-block"
 msgstr "Acf-feild-bolck"
 
@@ -31,4 +29,82 @@ msgstr "bboibgniwde"
 
 msgid "https://bobbingwide.com/about-bobbing-wide"
 msgstr "https://bobbingwide.com/about-bobbing-wide"
+
+#: includes/acf-field-names.php:137
+msgid "ACF field name"
+msgstr "ACF feild nmae"
+
+#: includes/acf-field-names.php:141
+msgid "Select the field name of the ACF field to display."
+msgstr "Slecet thE feild nmae Of thE ACF feild tO dsilpay."
+
+#: includes/acf-field-names.php:151
+msgid "ACF_field_name"
+msgstr "ACF_feild_nmae"
+
+#: includes/class-acf-field-block-renderer.php:62
+msgid "Field %1$s not set for post ID %2$d"
+msgstr "Feild %1$s nOt sEt fOr psot ID %2$d"
+
+#: includes/class-acf-field-block-renderer.php:125
+msgid "Something went wrong"
+msgstr "Smoteihng wnet worng"
+
+#: includes/class-acf-field-block-renderer.php:138
+msgid "Error: Render method not callable: %1$s"
+msgstr "Error: Rneedr mteohd nOt claallbe: %1$s"
+
+#: includes/class-acf-field-block-renderer.php:141
+msgid "Field: %1$s"
+msgstr "Feild: %1$s"
+
+#: includes/class-acf-field-block-renderer.php:144
+msgid "Field type: %1$s"
+msgstr "Feild tpye: %1$s"
+
+#: includes/class-acf-field-block-renderer.php:341
+#: includes/class-acf-field-block-renderer.php:348
+msgid "Download File"
+msgstr "Dwolnaod Flie"
+
+#: includes/class-acf-field-block-renderer.php:535
+msgid "Yes"
+msgstr "YEs"
+
+#: includes/class-acf-field-block-renderer.php:537
+msgid "No"
+msgstr "NO"
+
+#: includes/class-acf-field-block-renderer.php:1088
+msgid "Google Map goes here."
+msgstr "Goolge MAp geos hree."
+
+#: includes/class-acf-field-block-renderer.php:1090
+msgid "Please set the address for this Google Maps map"
+msgstr "Pelsae sEt thE adderss fOr tihs Goolge Mpas mAp"
+
+#: blocks/acf-field/block.json
+msgctxt "block title"
+msgid "ACF field"
+msgstr "ACF feild"
+
+#: blocks/acf-field/block.json
+msgctxt "block description"
+msgid "Displays an ACF field"
+msgstr "Dsilpyas An ACF feild"
+
+#: blocks/acf-field/block.json
+msgctxt "block keyword"
+msgid "generic"
+msgstr "gnereic"
+
+#: blocks/acf-field/block.json
+msgctxt "block keyword"
+msgid "field"
+msgstr "feild"
+
+#: blocks/acf-field/block.json
+msgctxt "block keyword"
+msgid "acf"
+msgstr "Acf"
 
