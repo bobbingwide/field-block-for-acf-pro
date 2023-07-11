@@ -36,10 +36,8 @@ class acf_field_block_renderer
 
     function render()
     {
-        //echo "Rendering block";
         $this->field_name = get_field('acf-field-name');
-        // What if the field name isn't set?
-
+        // @TODO What if the field name isn't set?
         $this->field_info = get_field_object($this->field_name, $this->post_id);
         if ($this->field_info) {
             $this->field = get_field($this->field_name, $this->post_id);
@@ -52,8 +50,15 @@ class acf_field_block_renderer
 
     }
 
+	/**
+	 * Display a message if the field is not set.
+	 *
+	 * @TODO Q: Should we only do this in the block editor?
+	 * @return void
+	 */
     function render_no_field_info() {
         echo '<p>';
+		/* Translators: 1 Field name, 2 Post ID */
         printf( __( 'Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id );
         echo '</p>';
 
@@ -65,18 +70,12 @@ class acf_field_block_renderer
     function render_acf_field_classes($field_name, $field_type, $block)
     {
         $classes = ['acf-field-' . $field_name];
-        //$classes[] = $field_name;
         $classes[] = 'acf-type-' . $field_type;
         if (!empty($block['className'])) {
             $classes = array_merge($classes, explode(' ', $block['className']));
         }
-
         $classes = implode(' ', $classes);
         $anchor = $block['anchor'] ?? null;
-        //if( !empty( $block['anchor'] ) )
-        //	$anchor = ' id="' . sanitize_title( $block['anchor'] ) . '"';
-
-        //echo "<div class=\"$classes\">";
         $wrapper_attributes = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor));
         echo '<div ';
         echo $wrapper_attributes;
@@ -88,10 +87,11 @@ class acf_field_block_renderer
     /**
      * Gets the renderer for the field.
      *
+     * @return function / method to render the field
      */
     function get_renderer()
     {
-        bw_trace2();
+        //bw_trace2();
         $renderer = [$this, 'render_acf_field_block_' . $this->field_info['type']];
         $renderer = apply_filters('acf_field_block_get_renderer', $renderer, $this->field_info, $this->field);
         if (!is_callable($renderer)) {
@@ -102,19 +102,28 @@ class acf_field_block_renderer
         return $renderer;
     }
 
+	/**
+	 * Renders the ACF field contents using the required renderer.
+	 *
+	 * @return void
+	 */
     function render_acf_field_contents()
     {
         $this->get_renderer();
         $this->invoke_renderer();
     }
 
+	/**
+	 * Invokes the rendering logic for the field.
+	 *
+	 * @return void
+	 */
     function invoke_renderer()
     {
         $result = call_user_func($this->renderer, $this->field, $this->field_info, $this->post_id, $this);
         if (false === $result) {
-            echo "Something went wrong";
+            echo __( "Something went wrong", 'acf-field-block' );
         }
-
     }
 
     /**
@@ -125,11 +134,14 @@ class acf_field_block_renderer
     function render_acf_field_not_callable()
     {
         $method = is_array($this->not_callable) ? get_class($this->not_callable[0]) . '::' . $this->not_callable[1] : $this->not_callable;
-        printf('Error: Render method not callable: %1$s', $method);
+		/* Translators: 1: Name of method/function to render the block. */
+        printf(__('Error: Render method not callable: %1$s', 'acf-field-block' ), $method);
         echo '<br />';
-        printf('Field: %1$s', $this->field_name);
+		/* Translators: 1: Name of the field being rendered. */
+        printf(__( 'Field: %1$s', 'acf-field-block'), $this->field_name);
         echo '<br />';
-        echo "Field type: " . $this->field_info['type'];
+		/* Translators: 1: Type of the field being rendered. */
+        printf( __( 'Field type: %1$s', 'acf-field-block' ), $this->field_info['type'] );
     }
 
     /**
@@ -325,12 +337,16 @@ class acf_field_block_renderer
             case 'id':
                 $url = wp_get_attachment_url($field);
                 $url = esc_html($url);
-                echo "<a href=\"$url\">Download File</a>";
+                echo "<a href=\"$url\">";
+	            _e( 'Download File', 'acf-field-block' );
+				echo "</a>";
                 break;
 
             case 'url':
             default:
-                echo "<a href=\"$field\">Download File</a>";
+                echo "<a href=\"$field\">";
+	            _e( 'Download File', 'acf-field-block' );
+	            echo "</a>";
         }
     }
 
@@ -407,6 +423,7 @@ class acf_field_block_renderer
      * @link https://www.advancedcustomfields.com/resources/checkbox/
      * @link https://www.advancedcustomfields.com/resources/radio-button/
      * @link https://www.advancedcustomfields.com/resources/button-group/
+     *
      * @param $field
      * @param $field_info
      * @param $post_id
@@ -503,7 +520,6 @@ class acf_field_block_renderer
     /**
      * Displays an ACF true_false field.
      *
-     *
      * @link https://www.advancedcustomfields.com/resources/true-false
      *
      * @param $field
@@ -516,9 +532,9 @@ class acf_field_block_renderer
     function render_acf_field_block_true_false($field, $field_info, $post_id, $acf_field_block_class)
     {
         if ($field) {
-            echo "Yes";
+			_e( "Yes", 'acf-field-block' );
         } else {
-            echo "No";
+            _e( "No", 'acf-field-block' );
         }
     }
 
@@ -551,6 +567,15 @@ class acf_field_block_renderer
         $this->field_block_display_link($link_url, $link_title, $link_target);
     }
 
+	/**
+	 * Displays a link.
+	 *
+	 * @param $link_url
+	 * @param $link_title
+	 * @param $link_target
+	 *
+	 * @return void
+	 */
     function field_block_display_link($link_url, $link_title, $link_target = '_self')
     {
         echo '<a href="';
@@ -640,7 +665,6 @@ class acf_field_block_renderer
     /**
      * Displays an ACF relationship field.
      *
-     *
      * @link https://www.advancedcustomfields.com/resources/relationship
      *
      * @param $field
@@ -664,7 +688,6 @@ class acf_field_block_renderer
 
     /**
      * Displays an ACF taxonomy field.
-     *
      *
      * @link https://www.advancedcustomfields.com/resources/taxonomy
      *
@@ -724,7 +747,6 @@ class acf_field_block_renderer
 
     /**
      * Displays an ACF user field.
-     *
      *
      * @link https://www.advancedcustomfields.com/resources/user
      *
@@ -788,10 +810,15 @@ class acf_field_block_renderer
         if ($multiple) {
             echo '</ul>';
         }
-
-
     }
 
+	/**
+	 * Display the user's display name.
+	 *
+	 * @param $display_name
+	 *
+	 * @return void
+	 */
     function field_block_display_user($display_name)
     {
         echo esc_html($display_name);
@@ -799,7 +826,6 @@ class acf_field_block_renderer
 
     /**
      * Displays an ACF date_picker field.
-     *
      *
      * @link https://www.advancedcustomfields.com/resources/date-picker
      *
@@ -815,7 +841,6 @@ class acf_field_block_renderer
 
     /**
      * Displays an ACF date_time_picker field.
-     *
      *
      * @link https://www.advancedcustomfields.com/resources/date-time-picker
      *
@@ -842,6 +867,7 @@ class acf_field_block_renderer
     function render_acf_field_block_time_picker($field, $field_info, $post_id, $acf_field_block_class) {
         echo esc_html( $field );
     }
+
     /**
      * Displays an ACF color_picker field.
      *
@@ -858,8 +884,8 @@ class acf_field_block_renderer
         echo '<span style="background-color: ' . $field . ';">';
         echo '&nbsp;</span>&nbsp;';
         echo esc_html( $field );
-
     }
+
     /**
      * Displays an ACF group field.
      *
@@ -890,14 +916,12 @@ class acf_field_block_renderer
             $this->render_acf_field_contents();
             echo '</div>';
         }
-
-
     }
 
     /**
      * Displays an ACF repeater field.
      *
-     * $field contains a multi dimensional array of sub_fields values.
+     * $field contains a multidimensional array of sub_fields values.
      * $field_info contains 'sub_fields', which is an array of the fields.
      *
      * @link https://www.advancedcustomfields.com/resources/repeater
@@ -984,7 +1008,7 @@ class acf_field_block_renderer
     }
 
     /**
-     * Renders each of the sub-fields in a layout section.
+     * Renders each of the subfields in a layout section.
      *
      * @param $layout
      * @param $section
@@ -1007,10 +1031,8 @@ class acf_field_block_renderer
      *
      * @link https://www.advancedcustomfields.com/resources/clone
      *
-     *
      * $field contains the field values
      * $field_info contains the sub_fields
-     *
      *
      * @param $field
      * @param $field_info
@@ -1021,39 +1043,13 @@ class acf_field_block_renderer
     function render_acf_field_block_clone( $field, $field_info, $post_id, $acf_field_block_class) {
         bw_trace2( $field, "field", false );
         bw_trace2( $field_info, "field_info", false );
-        //echo esc_html( $field_info['name'] );
-        //echo $this->field_name;
-        /*
-        switch ( $field_info['display'] ) {
-            case 'group':
-                echo 'div class="group">';
-                break;
-            default:
-                //echo 'seamless';
-        }
-        */
         $this->render_layout( $field_info, $field );
-        /*
-        switch ( $field_info['display'] ) {
-            case 'group':
-                echo '</div>';
-                break;
-            default:
-                //echo 'seamless';
-        }
-
-        */
-
-
     }
 
     /**
      * Displays an ACF google_map field.
      *
      * @link https://www.advancedcustomfields.com/resources/google_map
-
-     *
-     *
      *
      * @param $field
      * @param $field_info
@@ -1089,9 +1085,9 @@ class acf_field_block_renderer
         $lng = $field['lng'] ?? null;
         if ( $this->is_preview )  {
             if ( $lat && $lng ) {
-                echo "Google Map goes here.";
+                _e( "Google Map goes here.", 'acf-field-block' );
             } else {
-                echo "Please set the address for this Google Maps map";
+               _e("Please set the address for this Google Maps map", 'acf-field-block' );
             }
 
         }
