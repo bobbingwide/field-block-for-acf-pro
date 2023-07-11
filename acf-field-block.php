@@ -34,8 +34,11 @@ License: GPL2
  * @return void
  */
 function acf_field_block_acf_include_fields() {
+	$loaded = load_plugin_textdomain( 'acf-field-block', false, 'acf-field-block/languages' );
+	bw_trace2( $loaded, 'loaded?', false );
 	require_once __DIR__ . '/includes/acf-field-names.php';
 	$acf_field_name_field = acf_field_block_build_acf_field_name_field();
+	bw_trace2( $acf_field_name_field, 'acf_field_name_field', false );
 
 	acf_add_local_field_group( array(
 			'key' => 'group_645f589a8cade',
@@ -71,9 +74,8 @@ function acf_field_block_acf_include_fields() {
  * @return void
  */
 function acf_field_block_register_blocks() {
-	$registered = register_block_type( __DIR__ . '/blocks/acf-field' );
+	$registered=register_block_type( __DIR__ . '/blocks/acf-field' );
 	//bw_trace2( $registered, 'registered?', false );
-
 }
 
 /**
