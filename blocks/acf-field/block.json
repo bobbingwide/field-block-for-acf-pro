@@ -14,7 +14,9 @@
   "supports": {
     "align": true,
     "anchor": true,
-    "color": {},
+    "color": {
+      "link": true
+    },
     "position":  {
       "sticky": true
     },
