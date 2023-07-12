@@ -74,6 +74,10 @@ class acf_field_block_renderer
         if (!empty($block['className'])) {
             $classes = array_merge($classes, explode(' ', $block['className']));
         }
+		if ( isset( $block['align'] ) ) {
+			$classes = array_merge( $classes, [ 'has-text-align-' . $block['align'] ] );
+		}
+
         $classes = implode(' ', $classes);
         $anchor = $block['anchor'] ?? null;
         $wrapper_attributes = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor));
