@@ -5,7 +5,7 @@
 * Tags: ACF, field, block
 * Requires at least: 6.2
 * Tested up to: 6.2.2
-* Stable tag: 0.1.1
+* Stable tag: 0.2.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ for a field type or specific field.
 1. ACF field block - Settings
 
 ## Upgrade Notice 
+# 0.2.0 
+Update for center alignment support and link colous
+
 # 0.1.1 
 Internationalized and localized for UK English.
 
@@ -64,6 +67,10 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 ## Changelog 
+# 0.2.0 
+* Changed: Support the align attribute #12
+* Changed: Enable link colors #1
+
 # 0.1.1 
 * Changed: Internationalize and localize into UK English and bb_BB locale #11
 
