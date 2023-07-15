@@ -57,7 +57,7 @@ for a field type or specific field.
 
 == Upgrade Notice ==
 = 0.2.0 = 
-Update for center alignment support and link colous
+Update for center alignment support and link colors
  
 = 0.1.1 = 
 Internationalized and localized for UK English.

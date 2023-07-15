@@ -2,14 +2,14 @@
 # This file is distributed under the GPL2.
 msgid ""
 msgstr ""
-"Project-Id-Version: acf-field-block 0.1.0\n"
+"Project-Id-Version: acf-field-block 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-field-block\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-11T20:47:15+00:00\n"
+"POT-Creation-Date: 2023-07-15T13:21:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: acf-field-block\n"
@@ -51,43 +51,43 @@ msgstr ""
 msgid "Field %1$s not set for post ID %2$d"
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:125
+#: includes/class-acf-field-block-renderer.php:129
 msgid "Something went wrong"
 msgstr ""
 
 #. Translators: 1: Name of method/function to render the block.
-#: includes/class-acf-field-block-renderer.php:138
+#: includes/class-acf-field-block-renderer.php:142
 msgid "Error: Render method not callable: %1$s"
 msgstr ""
 
 #. Translators: 1: Name of the field being rendered.
-#: includes/class-acf-field-block-renderer.php:141
+#: includes/class-acf-field-block-renderer.php:145
 msgid "Field: %1$s"
 msgstr ""
 
 #. Translators: 1: Type of the field being rendered.
-#: includes/class-acf-field-block-renderer.php:144
+#: includes/class-acf-field-block-renderer.php:148
 msgid "Field type: %1$s"
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:341
-#: includes/class-acf-field-block-renderer.php:348
+#: includes/class-acf-field-block-renderer.php:345
+#: includes/class-acf-field-block-renderer.php:352
 msgid "Download File"
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:535
+#: includes/class-acf-field-block-renderer.php:539
 msgid "Yes"
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:537
+#: includes/class-acf-field-block-renderer.php:541
 msgid "No"
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:1088
+#: includes/class-acf-field-block-renderer.php:1092
 msgid "Google Map goes here."
 msgstr ""
 
-#: includes/class-acf-field-block-renderer.php:1090
+#: includes/class-acf-field-block-renderer.php:1094
 msgid "Please set the address for this Google Maps map"
 msgstr ""
 
