@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="2" assertions="9" errors="0" warnings="0" failures="1" skipped="0" time="0.314422">
+    <testsuite name="acf-field-block" tests="2" assertions="9" errors="0" warnings="0" failures="1" skipped="0" time="0.314422">
+      <testsuite name="Tests_text_field" file="C:\apache\htdocs\wordpress\wp-content\plugins\acf-field-block\tests\test-text-field.php" tests="2" assertions="9" errors="0" warnings="0" failures="1" skipped="0" time="0.314422">
+        <testcase name="test_text_field_render_no_post_no_field" class="Tests_text_field" classname="Tests_text_field" file="C:\apache\htdocs\wordpress\wp-content\plugins\acf-field-block\tests\test-text-field.php" line="41" assertions="6" time="0.107882"/>
+        <testcase name="test_text_field_render_post_no_field" class="Tests_text_field" classname="Tests_text_field" file="C:\apache\htdocs\wordpress\wp-content\plugins\acf-field-block\tests\test-text-field.php" line="72" assertions="3" time="0.206539">
+          <failure type="PHPUnit\Framework\ExpectationFailedException">Tests_text_field::test_text_field_render_post_no_field
+Failed asserting that file "tests/data/en_US/test_text_field_render_post_no_field.html" exists.
+
+C:\apache\htdocs\wordpress\wp-content\plugins\oik-batch\tests\class-bw-unittestcase.php:274
+C:\apache\htdocs\wordpress\wp-content\plugins\oik-batch\tests\class-bw-unittestcase.php:327
+C:\apache\htdocs\wordpress\wp-content\plugins\acf-field-block\tests\test-text-field.php:81</failure>
+          <system-out>Array
+(
+    [key] =&gt; 
+    [label] =&gt; Label text
+    [name] =&gt; name_text
+    [aria-label] =&gt; 
+    [type] =&gt; text
+    [instructions] =&gt; 
+    [required] =&gt; 1
+    [conditional_logic] =&gt; 0
+    [wrapper] =&gt; Array
+        (
+            [width] =&gt; 
+            [class] =&gt; 
+            [id] =&gt; 
+        )
+
+    [default_value] =&gt; 
+    [maxlength] =&gt; 
+    [placeholder] =&gt; 
+    [prepend] =&gt; 
+    [append] =&gt; 
+)
+&lt;!-- wp:acf-field/acf-field {"name":"acf-field/acf-field","data":{"acf-field-name":"name_text"},"mode":"preview"} /--&gt;&#13;
+&lt;p&gt;Field  not set for post ID 19189&lt;/p&gt;&#13;
+</system-out>
+        </testcase>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
