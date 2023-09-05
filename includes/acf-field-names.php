@@ -21,26 +21,29 @@ function acf_field_block_get_possible_field_names( $field_name, $post_id ) {
 	//bw_trace2($field_groups, 'field groups', false );
 	$fields = [];
 	foreach ( $field_groups as $field_group ) {
-		// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
-		$post_types = acf_field_block_process_field_group( $field_group );
-		if ( $post_types ) {
-			$raw_fields = acf_get_fields( $field_group['ID'] );
-			//bw_trace2( $raw_fields, 'raw_fields', false );
-			foreach ( $raw_fields as $raw_field ) {
-                //bw_trace2( '?' . $raw_field['name'] . '?', 'raw_field name', false);
-                if ( !empty($raw_field['name'])) {
-                    $field_select_label = [];
-                    $field_select_label[] = $raw_field['label'];
-                    $field_select_label[] = '-';
-                    $field_select_label[] = $post_types;
-                    if (defined('SCRIPT_DEBUG') && true === SCRIPT_DEBUG) {
-                        $field_select_label[] = '-';
-                        $field_select_label[] = $raw_field['name'] . '/' . $raw_field['key'];
-                    }
-                    $fields[$raw_field['name']] = implode(' ', $field_select_label);
-                } else {
-                    //bw_trace2( $raw_field, "unnamed raw_field", false);
-                }
+		if ( $field_group['active']) {
+			// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
+			$post_types=acf_field_block_process_field_group( $field_group );
+			if ( $post_types ) {
+				$raw_fields=acf_get_fields( $field_group['ID'] );
+				//bw_trace2( $raw_fields, 'raw_fields', false );
+				foreach ( $raw_fields as $raw_field ) {
+					bw_trace2( '?' . $raw_field['name'] . '?', 'raw_field name', false );
+					//bw_trace2( $raw_field, 'raw_field', false );
+					if ( ! empty( $raw_field['name'] ) ) {
+						$field_select_label  =[];
+						$field_select_label[]=$raw_field['label'];
+						$field_select_label[]='-';
+						$field_select_label[]=$post_types;
+						if ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) {
+							$field_select_label[]='-';
+							$field_select_label[]=$raw_field['name'] . '/' . $raw_field['key'];
+						}
+						$fields[ $raw_field['key'] ]=implode( ' ', $field_select_label );
+					} else {
+						//bw_trace2( $raw_field, "unnamed raw_field", false);
+					}
+				}
 			}
 		}
 	}
