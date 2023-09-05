@@ -4,7 +4,7 @@
  * @package oik-bob-bing-wide
  * @copyright (C) Bobbing Wide 2023
  *
- * Test the functions in shortcodes/oik-dash.php
+ * Test the text field rendering in acf_field_block_renderer
  */
 class Tests_text_field extends BW_UnitTestCase {
 
@@ -25,12 +25,12 @@ class Tests_text_field extends BW_UnitTestCase {
 	 * We need to
 	 * - register the field group with the required field type
 	 * - create a post with the post meta set
-	 * - render the acf-field block
+	 * - render the acf-field block in preview mode
 	 *
 	 * ```
 	 * <!-- wp:acf-field/acf-field {
 	 * "name":"acf-field/acf-field",
-	 * "data":{"acf-field-name":"text","_acf-field-name":"field_645f589a88304"},
+	 * "data":{"acf-field-name":"field_64aa869f48df7","_acf-field-name":"field_645f589a88304"},
 	 * "mode":"preview"}
 	 * /-->
 	 * ```
