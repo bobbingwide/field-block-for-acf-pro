@@ -24,7 +24,10 @@ class acf_field_block_renderer
 
     function __construct($block, $content, $context, $is_preview, $post_id, $wp_block)
     {
-        bw_trace2();
+        bw_trace2( $block, "block", false );
+	    bw_trace2( $content, "content", false );
+		bw_trace2( $context, "context", false );
+	    bw_trace2( $post_id, "post_id", false );
         $this->block = $block;
         $this->content = $content;
         $this->context = $context;
@@ -32,14 +35,25 @@ class acf_field_block_renderer
         $this->post_id = $post_id;
         $this->wp_block = $wp_block;
         $this->renderer = [$this, 'field_default_renderer'];
+		$this->field_name = null;
+		$this->field_info = null;
     }
 
     function render()
     {
         $this->field_name = get_field('acf-field-name');
-        // @TODO What if the field name isn't set?
-        $this->field_info = get_field_object($this->field_name, $this->post_id);
-        if ($this->field_info) {
+	    bw_trace2( $this->field_name, 'field_name', false);
+		bw_trace2( $this->post_id, 'post id', false);
+        // We can't continue if the field name isn't set.
+		if ( !$this->field_name ) {
+			$this->render_no_field_name();
+			return;
+		}
+		if ( $this->post_id ) {
+			$this->field_info=get_field_object( $this->field_name, $this->post_id );
+		}
+		bw_trace2( $this->field_info, 'field_info', false);
+        if (  $this->field_info) {
             $this->field = get_field($this->field_name, $this->post_id);
             $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
             $this->render_acf_field_contents();
@@ -63,6 +77,13 @@ class acf_field_block_renderer
         echo '</p>';
 
     }
+
+	function render_no_field_name() {
+		echo '<p>';
+		printf( __( 'Field name not found for post ID %1$d', 'acf-field-block'), $this->post_id );
+		echo '</p>';
+
+	}
 
     /**
      * Displays classes for ACF field block.
