@@ -4,11 +4,11 @@
  * @package oik-bob-bing-wide
  * @copyright (C) Bobbing Wide 2023
  *
- * Test the number rendering in acf_field_block_renderer
+ * Test the range rendering in acf_field_block_renderer
  */
 require_once 'classes/class-acf-bw-unittestcase.php';
 
-class Tests_number_field extends ACF_BW_UnitTestCase {
+class Tests_range_field extends ACF_BW_UnitTestCase {
 
 	// @TODO Does this need to implement setUp and tearDown ?
 
@@ -25,20 +25,20 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 	 * ```
 	 * <!-- wp:acf-field/acf-field {
 	 * "name":"acf-field/acf-field",
-	 * "data":{"acf-field-name":"field_64aa870f48dfc","_acf-field-name":"field_645f589a88304"},
+	 * "data":{"acf-field-name":"field_64aa871c48dfd","_acf-field-name":"field_645f589a88304"},
 	 * "mode":"preview"}
 	 * /-->
 	 * ```
 	 */
 
 	/**
-	 * Tests the field type number when the field's set to blank or null
+	 * Tests the field type range when the field's set to blank or null
 	 *
 	 * @return void
 	 */
-	function test_number_field_render_post_no_field_value() {
-		$field_name = 'number';
-		$field_key = 'field_64aa870f48dfc';
+	function test_range_field_render_post_no_field_value() {
+		$field_name = 'range';
+		$field_key = 'field_64aa871c48dfd';
 		$content = $this->create_acf_field_block( $field_key );
 		$this->set_dummy_post( 19196 );
 		//$this->update_post_meta( $field_name, 'eh what??');
@@ -51,17 +51,17 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 	}
 
 	/**
-	 * Tests the field type number when the field's set for the post.
+	 * Tests the field type range when the field's set for the post.
 	 *
 	 * @return void
 	 */
-	function test_number_field_render_post_field_set() {
-		$field_name = 'number';
-		$field_key = 'field_64aa870f48dfc';
+	function test_range_field_render_post_field_set() {
+		$field_name = 'range';
+		$field_key = 'field_64aa871c48dfd';
 		$content = $this->create_acf_field_block( $field_key );
 		//echo $content;
 		$this->set_dummy_post();
-		$this->update_post_meta( $field_name, 3.14159265 );
+		$this->update_post_meta( $field_name, 42 );
 		$this->update_post_meta( '_'. $field_name, $field_key);
 
 		$html = do_blocks( $content );
@@ -77,9 +77,9 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 	 * @return void
 	 *
 	 */
-	function test_number_field_render_no_post_no_field() {
-		$field_name     = 'number';
-		$field_name     = 'field_64aa870f48dfc';
+	function test_range_field_render_no_post_no_field() {
+		$field_name     = 'range';
+		$field_name     = 'field_64aa871c48dfd';
 		$acf_field_block=$this->create_acf_field_block( $field_name );
 		$content        =$acf_field_block;
 		$html           = do_blocks( $content );
@@ -96,15 +96,15 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 	 * Tests text field rendering with a dynamic post.
 	 * @return void
 	 */
-	function test_number_field_render() {
+	function test_range_field_render() {
 
-		$field_name = 'number';
-		$field_key = 'field_64aa870f48dfc';
+		$field_name = 'range';
+		$field_key = 'field_64aa871c48dfd';
 		$content = $this->create_acf_field_block( $field_key );
 		//echo $content;
 		$post = $this->dummy_post( 1 );
 		$this->set_dummy_post( $post->ID);
-		$this->update_post_meta( $field_name, 3.14159265 );
+		$this->update_post_meta( $field_name, 42 );
 		$this->update_post_meta( '_'. $field_name, $field_key);
 
 		$html = do_blocks( $content );
@@ -120,5 +120,6 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 
 
 }
+
 
 

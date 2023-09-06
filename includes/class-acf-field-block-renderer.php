@@ -214,6 +214,7 @@ class acf_field_block_renderer
     /**
      * Renders an ACF range field.
      *
+     * @link https://www.advancedcustomfields.com/resources/range/
      * @param $field
      * @param $field_info
      * @param $post_id
@@ -251,6 +252,8 @@ class acf_field_block_renderer
      * @link https://www.advancedcustomfields.com/resources/image/
      * @param $field
      * @param $field_info
+     * @param $post_id
+     * @param $acf_field_block_class
      *
      * @return void
      */
