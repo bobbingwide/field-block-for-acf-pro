@@ -71,9 +71,10 @@ No code solution to display ACF Fields using the ACF field block
 == Changelog ==
 = 1.0.0 =
 * Changed: Renamed for wordpress.org #18
+* Changed: Support for PHP 8.1 and PHP 8.2 #19
 * Tested: With WordPress 6.4-RC3 and WordPress Multisite
 * Tested: With Advanced Custom Fields PRO v6.2.2
-* Tested: With Gurtenberg 16.9.0
+* Tested: With Gutenberg 16.9.0
 * Tested: With PHP 8.0, PHP 8.1 and PHP 8.2
 * Tested: With PHPUnit 9.6
 

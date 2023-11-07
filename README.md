@@ -1,11 +1,11 @@
-# ACF Field block 
-![banner](assets/acf-field-block-banner-772x250.jpg)
+# Field block for ACF PRO 
+![banner](assets/field-block-for-acf-pro-banner-772x250.jpg)
 * Contributors: bobbingwide
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: ACF, field, block
 * Requires at least: 6.2
-* Tested up to: 6.2.2
-* Stable tag: 0.2.0
+* Tested up to: 6.4-RC3
+* Stable tag: 1.0.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,9 @@ for a field type or specific field.
 1. ACF field block - Settings
 
 ## Upgrade Notice 
+# 1.0.0 
+First version for wordpress.org
+
 # 0.2.0 
 Update for center alignment support and link colors
 
@@ -67,6 +70,15 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 ## Changelog 
+# 1.0.0 
+* Changed: Renamed for wordpress.org #18
+* Changed: Support for PHP 8.1 and PHP 8.2 #19
+* Tested: With WordPress 6.4-RC3 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.2.2
+* Tested: With Gutenberg 16.9.0
+* Tested: With PHP 8.0, PHP 8.1 and PHP 8.2
+* Tested: With PHPUnit 9.6
+
 # 0.2.0 
 * Changed: Support the align attribute #12
 * Changed: Enable link colors #1
