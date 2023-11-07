@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: acf-field-block
-Plugin URI: https://www.oik-plugins.com/oik-plugins/acf-field-block
-Description: ACF Field block
+Plugin Name: Field block for ACF Pro
+Plugin URI: https://www.oik-plugins.com/oik-plugins/field-block-for-acf-pro
+Description: Displays ACF fields in a block
 Depends: advanced-custom-fields-pro
-Version: 0.2.0
+Version: 1.0.0
 Author: bobbingwide
 Author URI: https://bobbingwide.com/about-bobbing-wide
-Text Domain: acf-field-block
+Text Domain: field-block-for-acf-pro
 License: GPL2
 
     Copyright 2023 Bobbing Wide (email : herb@bobbingwide.com )
@@ -34,7 +34,7 @@ License: GPL2
  * @return void
  */
 function acf_field_block_acf_include_fields() {
-	$loaded = load_plugin_textdomain( 'acf-field-block', false, 'acf-field-block/languages' );
+	$loaded = load_plugin_textdomain( 'field-block-for-acf-pro', false, 'field-block-for-acf-pro/languages' );
 	bw_trace2( $loaded, 'loaded?', false );
 	require_once __DIR__ . '/includes/acf-field-names.php';
 	$acf_field_name_field = acf_field_block_build_acf_field_name_field();
@@ -75,17 +75,16 @@ function acf_field_block_acf_include_fields() {
  */
 function acf_field_block_register_blocks() {
 	$registered=register_block_type( __DIR__ . '/blocks/acf-field' );
-	//bw_trace2( $registered, 'registered?', false );
+	bw_trace2( $registered, 'registered?', false );
 }
 
 /**
- * Function performed when acf-field-block.php is loaded
+ * Function performed when field-block-for-acf-pro.php is loaded
  *
  * Registers the `acf-field` group in response to `acf/include_fields`
  * and the `acf-field/acf-field` block in response to `acf/init`.
  *
- * Note: We can't check the 'ACF' constant until it's defined.
- * ACF PRO is loaded after acf-field-block
+ * @return void
  */
 function acf_field_block_plugin_loaded() {
 	add_action( 'acf/include_fields', 'acf_field_block_acf_include_fields', 11 );

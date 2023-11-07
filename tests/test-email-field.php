@@ -107,7 +107,9 @@ class Tests_email_field extends ACF_BW_UnitTestCase {
 		$found = false;
 		foreach ( $expected_array as $index => $line ) {
 			$replace=$this->replace_between( $expected_array[ $index ], 'href="mailto:', '">', 'email@example.com' );
-			$replace=$this->replace_between( $replace, '">', '</a>', 'email@example.com' );
+            if ( $replace ) {
+	            $replace=$this->replace_between( $replace, '">', '</a>', 'email@example.com' );
+            }
 			if ( $replace ) {
 				$expected_array[ $index ]=$replace;
 				$found                   =true;
