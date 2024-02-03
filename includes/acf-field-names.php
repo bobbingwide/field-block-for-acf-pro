@@ -1,4 +1,10 @@
 <?php
+/**
+ * @copyright (C) Copyright Bobbing Wide 2023, 2024
+ * @package field-block-for-acf-pro
+ */
+
+if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Gets the possible field names.
@@ -16,14 +22,14 @@
  *
  * @return array
  */
-function acf_field_block_get_possible_field_names( $field_name, $post_id ) {
+function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id ) {
 	$field_groups = acf_get_field_groups();
 	//bw_trace2($field_groups, 'field groups', false );
 	$fields = [];
 	foreach ( $field_groups as $field_group ) {
 		if ( $field_group['active']) {
 			// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
-			$post_types=acf_field_block_process_field_group( $field_group );
+			$post_types=field_block_for_acf_pro_process_field_group( $field_group );
 			if ( $post_types ) {
 				$raw_fields=acf_get_fields( $field_group['ID'] );
 				//bw_trace2( $raw_fields, 'raw_fields', false );
@@ -84,7 +90,7 @@ function acf_field_block_get_possible_field_names( $field_name, $post_id ) {
 			[value] => (string) "page"
  * ```
  */
-function acf_field_block_process_field_group( $field_group ) {
+function field_block_for_acf_pro_process_field_group( $field_group ) {
 	$post_types = [];
 	$rules = $field_group['location'];
 	foreach ( $rules as $ruleset ) {
@@ -122,8 +128,8 @@ function acf_field_block_process_field_group( $field_group ) {
  *
  * @return void
  */
-function acf_field_block_list_possible_field_names( $field_name, $post_id ) {
-	$field_names = acf_field_block_get_possible_field_names( $field_name, $post_id );
+function field_block_for_acf_pro_list_possible_field_names( $field_name, $post_id ) {
+	$field_names = field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id );
 	foreach ( $field_names as $name => $value ) {
 		echo "<br />$name $value";
 	}
@@ -134,7 +140,7 @@ function acf_field_block_list_possible_field_names( $field_name, $post_id ) {
  *
  * @return array
  */
-function acf_field_block_build_acf_field_name_field() {
+function field_block_for_acf_pro_build_acf_field_name_field() {
 	$acf_field_name = 	array(
 		'key' => 'field_645f589a88304',
 		'label' => __('ACF field name', 'acf-field-block' ),
@@ -159,7 +165,7 @@ function acf_field_block_build_acf_field_name_field() {
 	/**
 	 * Set the possible values.
 	 */
-	$acf_field_name['choices'] = acf_field_block_get_possible_field_names( '', 0 );
+	$acf_field_name['choices'] = field_block_for_acf_pro_get_possible_field_names( '', 0 );
 	return $acf_field_name;
 }
 
@@ -172,7 +178,7 @@ function acf_field_block_build_acf_field_name_field() {
  * @param $field
  * @return mixed
  */
-function acf_field_block_prepare_field_name_acf_field_name( $field ) {
-	$field['choices'] = acf_field_block_get_possible_field_names( '', 0 );
+function field_block_for_acf_pro_prepare_field_name_acf_field_name( $field ) {
+	$field['choices'] = field_block_for_acf_pro_get_possible_field_names( '', 0 );
 	return $field;
 }
