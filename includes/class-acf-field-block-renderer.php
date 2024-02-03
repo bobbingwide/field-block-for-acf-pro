@@ -3,7 +3,7 @@
  * Renders an ACF field.
  *
  * @package acf-field-block
- * @copyright (C) Copyright Bobbing Wide 2023
+ * @copyright (C) Copyright Bobbing Wide 2023, 2024
  * @depends ACF PRO
  */
 
@@ -73,14 +73,14 @@ class acf_field_block_renderer
     function render_no_field_info() {
         echo '<p>';
 		/* Translators: 1 Field name, 2 Post ID */
-        printf( __( 'Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id );
+        printf( esc_html__( 'Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id );
         echo '</p>';
 
     }
 
 	function render_no_field_name() {
 		echo '<p>';
-		printf( __( 'Field name not found for post ID %1$d', 'acf-field-block'), $this->post_id );
+		printf( esc_html__( 'Field name not found for post ID %1$d', 'acf-field-block'), $this->post_id );
 		echo '</p>';
 
 	}
@@ -147,7 +147,7 @@ class acf_field_block_renderer
     {
         $result = call_user_func($this->renderer, $this->field, $this->field_info, $this->post_id, $this);
         if (false === $result) {
-            echo __( "Something went wrong", 'acf-field-block' );
+            esc_html_e( "Something went wrong", 'acf-field-block' );
         }
     }
 
@@ -160,13 +160,13 @@ class acf_field_block_renderer
     {
         $method = is_array($this->not_callable) ? get_class($this->not_callable[0]) . '::' . $this->not_callable[1] : $this->not_callable;
 		/* Translators: 1: Name of method/function to render the block. */
-        printf(__('Error: Render method not callable: %1$s', 'acf-field-block' ), $method);
+        printf( esc_html__('Error: Render method not callable: %1$s', 'acf-field-block' ), $method);
         echo '<br />';
 		/* Translators: 1: Name of the field being rendered. */
-        printf(__( 'Field: %1$s', 'acf-field-block'), $this->field_name);
+        printf(esc_html__( 'Field: %1$s', 'acf-field-block'), $this->field_name);
         echo '<br />';
 		/* Translators: 1: Type of the field being rendered. */
-        printf( __( 'Field type: %1$s', 'acf-field-block' ), $this->field_info['type'] );
+        printf( esc_html__( 'Field type: %1$s', 'acf-field-block' ), $this->field_info['type'] );
     }
 
     /**
@@ -355,25 +355,25 @@ class acf_field_block_renderer
         switch ($field_info['return_format']) {
             case 'array':
                 echo '<a href="';
-                echo $field['url'];
+                echo esc_url( $field['url'] );
                 echo '">';
                 // Display the file name or title?
-                echo $field['title'];
+                echo esc_html( $field['title'] );
                 echo '</a>';
                 break;
 
             case 'id':
                 $url = wp_get_attachment_url($field);
-                $url = esc_html($url);
+                $url = esc_url($url);
                 echo "<a href=\"$url\">";
-	            _e( 'Download File', 'acf-field-block' );
+	            esc_html_e( 'Download File', 'acf-field-block' );
 				echo "</a>";
                 break;
 
             case 'url':
             default:
                 echo "<a href=\"$field\">";
-	            _e( 'Download File', 'acf-field-block' );
+	            esc_html_e( 'Download File', 'acf-field-block' );
 	            echo "</a>";
         }
     }
@@ -560,9 +560,9 @@ class acf_field_block_renderer
     function render_acf_field_block_true_false($field, $field_info, $post_id, $acf_field_block_class)
     {
         if ($field) {
-			_e( "Yes", 'acf-field-block' );
+			esc_html_e( "Yes", 'acf-field-block' );
         } else {
-            _e( "No", 'acf-field-block' );
+            esc_html_e( "No", 'acf-field-block' );
         }
     }
 
@@ -1005,13 +1005,10 @@ class acf_field_block_renderer
     function render_acf_field_block_flexible_content($field, $field_info, $post_id, $acf_field_block_class) {
         bw_trace2( $field, "field", false );
         bw_trace2( $field_info, "field_info", false );
-        //echo esc_html( $field_info['name'] );
-        //echo $this->field_name;
 
         foreach ( $field as $section ) {
             $layout_name = $section['acf_fc_layout'];
-            echo '<div class="' . $layout_name . '">';
-            //echo $layout_name;
+            echo '<div class="' . esc_attr( $layout_name ) . '">';
             $layout = $this->get_layout( $field_info['layouts'], $layout_name );
             $this->render_layout( $layout, $section );
             echo '</div>';
@@ -1046,7 +1043,7 @@ class acf_field_block_renderer
         foreach ($layout['sub_fields'] as $sub_field_info) {
             $this->field_name = $sub_field_info['name'];
              $this->field = $section[ $this->field_name];
-            //echo $this->field;
+
             $this->field_info = $sub_field_info;
             $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
             $this->render_acf_field_contents();
@@ -1113,9 +1110,9 @@ class acf_field_block_renderer
         $lng = $field['lng'] ?? null;
         if ( $this->is_preview )  {
             if ( $lat && $lng ) {
-                _e( "Google Map goes here.", 'acf-field-block' );
+                esc_html_e( "Google Map goes here.", 'acf-field-block' );
             } else {
-               _e("Please set the address for this Google Maps map", 'acf-field-block' );
+               esc_html_e("Please set the address for this Google Maps map", 'acf-field-block' );
             }
 
         }
