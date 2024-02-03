@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package oik-bob-bing-wide
- * @copyright (C) Bobbing Wide 2023
+ * @package field-block-for-acf-pro
+ * @copyright (C) Bobbing Wide 2023, 2024
  *
  * Test the text_area rendering in acf_field_block_renderer
  */
@@ -37,7 +37,7 @@ class Tests_text_area_field extends BW_UnitTestCase {
 	 */
 
 	/**
-	 * Tests the field type text when the field's set to blank or null
+	 * Tests the field type text-area when the field's set to blank or null
 	 *
 	 * @return void
 	 */
@@ -56,7 +56,7 @@ class Tests_text_area_field extends BW_UnitTestCase {
 	}
 
 	/**
-	 * Tests the field type text when the field's set for the post.
+	 * Tests the field type text-area when the field's set for the post.
 	 *
 	 * Note: At present the logic fails when it's the second unit test that calls get_field('acf-field-name');
 	 * @return void
@@ -77,7 +77,7 @@ class Tests_text_area_field extends BW_UnitTestCase {
 	}
 
 	/**
-	 * Tests the text field type when there's no global post
+	 * Tests the text-area field type when there's no global post
 	 * and the post_meta's not set.
 	 *
 	 * @return void
@@ -123,7 +123,7 @@ class Tests_text_area_field extends BW_UnitTestCase {
 	}
 
 	/**
-	 * Tests text field rendering with a dynamic post.
+	 * Tests text-area field rendering with a dynamic post.
 	 * @return void
 	 */
 	function test_text_area_field_render() {

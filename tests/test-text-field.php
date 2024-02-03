@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package oik-bob-bing-wide
- * @copyright (C) Bobbing Wide 2023
+ * @package field-block-for-acf-pro
+ * @copyright (C) Bobbing Wide 2023, 2024
  *
  * Test the text field rendering in acf_field_block_renderer
  */

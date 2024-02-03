@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package oik-bob-bing-wide
- * @copyright (C) Bobbing Wide 2023
+ * @package field-block-for-acf-pro
+ * @copyright (C) Bobbing Wide 2023, 2024
  *
  * Class for ACF-field-block unit tests.
  * Extends BW_UnitTestCase to cater for ACF field block specific methods
@@ -19,24 +19,12 @@ class ACF_BW_UnitTestCase extends BW_UnitTestCase {
 	}
 
 	/**
+	 * Sets the post to the given ID and fetches it.
 	 *
-	 * Calls the logic to render an ACF field block
-	 * and compares the generated HTML with expected.
+	 * @param $id
 	 *
-	 * We need to
-	 * - register the field group with the required field type
-	 * - create a post with the post meta set
-	 * - render the acf-field block
-	 *
-	 * ```
-	 * <!-- wp:acf-field/acf-field {
-	 * "name":"acf-field/acf-field",
-	 * "data":{"acf-field-name":"field_64aa870148dfb","_acf-field-name":"field_645f589a88304"},
-	 * "mode":"preview"}
-	 * /-->
-	 * ```
+	 * @return void
 	 */
-
 	function set_dummy_post( $id=19274) {
 		global $post;
 		//$post = $this->dummy_post( 1 );
@@ -44,7 +32,6 @@ class ACF_BW_UnitTestCase extends BW_UnitTestCase {
 		$GLOBALS['id'] = 0;
 		//acf_reset_meta( $id );
 		$post = get_post( $id );
-
 	}
 
 	function update_post_meta( $field_name, $field_value ) {
@@ -74,13 +61,10 @@ class ACF_BW_UnitTestCase extends BW_UnitTestCase {
 		$block .= '},"mode":"preview"}';
 		$block .= ' /-->';
 		return $block;
-
 	}
 
 	function test_dummy_test() {
 		$this->assertTrue( true );
 	}
 
-
 }
-

@@ -1,8 +1,8 @@
 <<?php
 
 /**
- * @package oik-bob-bing-wide
- * @copyright (C) Bobbing Wide 2023
+ * @package field-block-for-acf-pro
+ * @copyright (C) Bobbing Wide 2023, 2024
  *
  * Test the email rendering in acf_field_block_renderer
  */
@@ -73,7 +73,7 @@ class Tests_email_field extends ACF_BW_UnitTestCase {
 	}
 
     /**
-	 * Tests text field rendering with a dynamic post.
+	 * Tests email field rendering with a dynamic post.
 	 * @return void
 	 */
 	function test_email_field_render() {
@@ -120,12 +120,4 @@ class Tests_email_field extends ACF_BW_UnitTestCase {
 		return $expected_array;
 	}
 
-
-
-
-
 }
-
-
-
-

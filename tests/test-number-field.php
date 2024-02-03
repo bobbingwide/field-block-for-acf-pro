@@ -1,8 +1,8 @@
 <<?php
 
 /**
- * @package oik-bob-bing-wide
- * @copyright (C) Bobbing Wide 2023
+ * @package field-block-for-acf-pro
+ * @copyright (C) Bobbing Wide 2023, 2024
  *
  * Test the number rendering in acf_field_block_renderer
  */
@@ -71,7 +71,7 @@ class Tests_number_field extends ACF_BW_UnitTestCase {
 	}
 
 	/**
-	 * Tests the text field type when there's no global post
+	 * Tests the number field type when there's no global post
 	 * and the post_meta's not set.
 	 *
 	 * @return void
