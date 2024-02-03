@@ -4,13 +4,13 @@ Plugin Name: Field block for ACF Pro
 Plugin URI: https://www.oik-plugins.com/oik-plugins/field-block-for-acf-pro
 Description: Displays ACF fields in a block
 Depends: advanced-custom-fields-pro
-Version: 1.0.0
+Version: 1.1.0
 Author: bobbingwide
 Author URI: https://bobbingwide.com/about-bobbing-wide
 Text Domain: field-block-for-acf-pro
 License: GPL2
 
-    Copyright 2023 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2023, 2024 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -27,17 +27,18 @@ License: GPL2
     http://www.gnu.org/licenses/gpl-2.0.html
 
 */
+if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
  * Registers the acf-field group for the block.
  *
  * @return void
  */
-function acf_field_block_acf_include_fields() {
+function field_block_for_acf_pro_acf_include_fields() {
 	$loaded = load_plugin_textdomain( 'field-block-for-acf-pro', false, 'field-block-for-acf-pro/languages' );
 	bw_trace2( $loaded, 'loaded?', false );
 	require_once __DIR__ . '/includes/acf-field-names.php';
-	$acf_field_name_field = acf_field_block_build_acf_field_name_field();
+	$acf_field_name_field = field_block_for_acf_pro_build_acf_field_name_field();
 	bw_trace2( $acf_field_name_field, 'acf_field_name_field', false );
 
 	acf_add_local_field_group( array(
@@ -65,7 +66,7 @@ function acf_field_block_acf_include_fields() {
 			'description' => '',
 			'show_in_rest' => 0,
 		) );
-	add_filter( 'acf/prepare_field/name=acf-field-name', 'acf_field_block_prepare_field_name_acf_field_name' );
+	add_filter( 'acf/prepare_field/name=acf-field-name', 'field_block_for_acf_pro_prepare_field_name_acf_field_name' );
 }
 
 /**
@@ -73,7 +74,7 @@ function acf_field_block_acf_include_fields() {
  *
  * @return void
  */
-function acf_field_block_register_blocks() {
+function field_block_for_acf_pro_register_blocks() {
 	$registered=register_block_type( __DIR__ . '/blocks/acf-field' );
 	bw_trace2( $registered, 'registered?', false );
 }
@@ -86,16 +87,20 @@ function acf_field_block_register_blocks() {
  *
  * @return void
  */
-function acf_field_block_plugin_loaded() {
-	add_action( 'acf/include_fields', 'acf_field_block_acf_include_fields', 11 );
-	add_action( 'acf/init', 'acf_field_block_register_blocks');
-    add_filter( 'acf/fields/google_map/api', 'acf_field_block_fields_google_map_api');
+function field_block_for_acf_pro_plugin_loaded() {
+	add_action( 'acf/include_fields', 'field_block_for_acf_pro_acf_include_fields', 11 );
+	add_action( 'acf/init', 'field_block_for_acf_pro_register_blocks');
+    add_filter( 'acf/fields/google_map/api', 'field_block_for_acf_pro_fields_google_map_api');
 }
 
-acf_field_block_plugin_loaded();
+field_block_for_acf_pro_plugin_loaded();
 
-
-// Dummy trace functions when oik-bwtrace is not activated
+/**
+ * The following are dummy functions that are required when the oik-bwtrace function
+ * is not activated on the site. oik-bwtrace uses the bw_ prefix for these two functions.
+ * oik-bwtrace and other plugins each check for the existance of the bw_trace2() function
+ * before defining these 2 functions.
+ */
 if ( !function_exists( "bw_trace2" ) ) {
     function bw_trace2( $p=null ) { return $p; }
     function bw_backtrace() {}
@@ -111,7 +116,7 @@ if ( !function_exists( "bw_trace2" ) ) {
  * @param $api
  * @return $api
  */
-function acf_field_block_fields_google_map_api( $api ) {
+function field_block_for_acf_pro_fields_google_map_api( $api ) {
     $key = null;
     if ( isset( $api['key'] ) ) {
         $key = $api['key'];
