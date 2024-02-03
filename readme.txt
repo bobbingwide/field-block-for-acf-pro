@@ -42,8 +42,11 @@ If you want to alter the output from the `acf-field-block/acf-field` block
 then you can either hook into the `render_block_acf-field-block/acf-field` filter to 
 modify the generated HTML,
 or the `acf_field_block_get_renderer` filter to set your own callback function/method
-for a field type or specific field. 
+for a field type or specific field.
 
+Google Map fields use JavaScript from maps.googleapis.com.
+The Google Map field requires an API key which you can obtain from
+https://developers.google.com/maps/documentation/javascript/get-api-key
 
 == Installation ==
 1. Upload the contents of the acf-field-block plugin to the `/wp-content/plugins/acf-field-block' directory
