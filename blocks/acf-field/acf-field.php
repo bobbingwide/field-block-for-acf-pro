@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @copyright (C) Copyright Bobbing Wide 2023, 2024
+ * @package field-block-for-acf-pro
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 
 /**
  * acf-field block template.
@@ -19,16 +26,9 @@
 //bw_trace2( $context, "context", false );
 //bw_trace2( $wp_block, "wp_block", false );
 
-/*
-if ( !function_exists( 'acf_field_block_display_field_block')) {
-	require_once __DIR__ . '/../../includes/acf-field.php';
-}
-acf_field_block_display_field_block( $block, $content, $context, $is_preview, $post_id, $wp_block );
-*/
+
 if ( !class_exists( 'acf_field_block_renderer')) {
     require_once __DIR__ . '/../../includes/class-acf-field-block-renderer.php';
 }
-
 $renderer = new acf_field_block_renderer( $block, $content, $context, $is_preview, $post_id, $wp_block );
 $renderer->render();
-
