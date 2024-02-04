@@ -30,3 +30,7 @@ and that the field values have been set for the fields using ACF.
 
 The test data tests the expected functionality of the plugin.
 It does not test the plugin's security against malicious content. 
+
+At present, there's no logic to replace https://s.b/wordpress with the siteurl for other test environments.
+Therefore tests need to be run against the `s.b/wordpress` local installation. 
+
