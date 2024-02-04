@@ -3,8 +3,8 @@ Contributors: bobbingwide
 Donate link: https://www.oik-plugins.com/oik/oik-donate/
 Tags: ACF, field, block
 Requires at least: 6.2
-Tested up to: 6.4-RC3
-Stable tag: 1.0.0
+Tested up to: 6.4.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,10 @@ https://developers.google.com/maps/documentation/javascript/get-api-key
 1. ACF field block - Settings
 
 == Upgrade Notice ==
+= 1.1.0 = 
+Updated following review by WordPress plugin review team. 
+
+ 
 = 1.0.0 =
 First version for wordpress.org
 
@@ -72,6 +76,20 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 == Changelog ==
+= 1.1.0 =
+* Added: Add PHPUnit tests for the image field type #15
+* Added: Add PHPUnit tests for the password field type #15
+* Changed: Document use of maps.googleapis.com for Google Map field #21
+* Changed: Improve output field security #21
+* Changed: Rename function prefix to field_block_for_acf_pro_ #21
+* Changed: exit if accessed directly #21
+* Changed: Tidy up tests a bit. Add README.md #15
+* Tested: With WordPress 6.4.3 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.2.5
+* Tested: With Gutenberg 17.6.0
+* Tested: With PHP 8.3
+* Tested: With PHPUnit 9.6
+
 = 1.0.0 =
 * Changed: Renamed for wordpress.org #18
 * Changed: Support for PHP 8.1 and PHP 8.2 #19
