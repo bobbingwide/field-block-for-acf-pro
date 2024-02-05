@@ -21,6 +21,7 @@ class acf_field_block_renderer
     private $field_name; // The name of the field to be displayed
     private $field_info; // Information about the field
     private $field; // Field value(s)
+	private $display_label;
 
     function __construct($block, $content, $context, $is_preview, $post_id, $wp_block)
     {
@@ -37,11 +38,13 @@ class acf_field_block_renderer
         $this->renderer = [$this, 'field_default_renderer'];
 		$this->field_name = null;
 		$this->field_info = null;
+		$this->display_label = false;
     }
 
     function render()
     {
         $this->field_name = get_field('acf-field-name');
+		$this->display_label = get_field( 'display-label');
 	    bw_trace2( $this->field_name, 'field_name', false);
 		bw_trace2( $this->post_id, 'post id', false);
         // We can't continue if the field name isn't set.
@@ -134,9 +137,27 @@ class acf_field_block_renderer
 	 */
     function render_acf_field_contents()
     {
+		if ( $this->display_label ) {
+			$this->display_field_label();
+			echo '<div class="value">';
+		}
         $this->get_renderer();
         $this->invoke_renderer();
+		if ( $this->display_label ) {
+			echo '</div>';
+		}
     }
+
+	/**
+	 * Displays the field's label.
+	 *
+	 * @return void
+	 */
+	function display_field_label() {
+		echo '<div class="label">';
+		echo esc_html( $this->field_info['label'] );
+		echo '</div>';
+	}
 
 	/**
 	 * Invokes the rendering logic for the field.

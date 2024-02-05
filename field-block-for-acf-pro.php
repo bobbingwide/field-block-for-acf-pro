@@ -40,12 +40,13 @@ function field_block_for_acf_pro_acf_include_fields() {
 	require_once __DIR__ . '/includes/acf-field-names.php';
 	$acf_field_name_field = field_block_for_acf_pro_build_acf_field_name_field();
 	bw_trace2( $acf_field_name_field, 'acf_field_name_field', false );
-
+	$display_label_field = field_block_for_acf_pro_build_display_label_field();
 	acf_add_local_field_group( array(
 			'key' => 'group_645f589a8cade',
 			'title' => 'acf-field',
 			'fields' => array(
-				$acf_field_name_field
+				$acf_field_name_field,
+				$display_label_field
 			),
 			'location' => array(
 				array(

@@ -31,6 +31,7 @@ function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id
 			// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
 			$post_types=field_block_for_acf_pro_process_field_group( $field_group );
 			if ( $post_types ) {
+				//bw_trace2( $field_group, 'field_group', false );
 				$raw_fields=acf_get_fields( $field_group['ID'] );
 				//bw_trace2( $raw_fields, 'raw_fields', false );
 				foreach ( $raw_fields as $raw_field ) {
@@ -40,7 +41,10 @@ function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id
 						$field_select_label  =[];
 						$field_select_label[]=$raw_field['label'];
 						$field_select_label[]='-';
+						$field_select_label[] = $field_group['title'];
+						$field_select_label[]='-';
 						$field_select_label[]=$post_types;
+
 						if ( defined( 'SCRIPT_DEBUG' ) && true === SCRIPT_DEBUG ) {
 							$field_select_label[]='-';
 							$field_select_label[]=$raw_field['name'] . '/' . $raw_field['key'];
@@ -53,6 +57,7 @@ function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id
 			}
 		}
 	}
+	asort( $fields );
     //bw_trace2( $fields, "?fields", false );
 	return $fields;
 }
@@ -162,6 +167,7 @@ function field_block_for_acf_pro_build_acf_field_name_field() {
 		'append' => '',
 	);
 
+
 	/**
 	 * Set the possible values.
 	 */
@@ -181,4 +187,34 @@ function field_block_for_acf_pro_build_acf_field_name_field() {
 function field_block_for_acf_pro_prepare_field_name_acf_field_name( $field ) {
 	$field['choices'] = field_block_for_acf_pro_get_possible_field_names( '', 0 );
 	return $field;
+}
+
+/**
+ * Defines the display-label yes/no field.
+ *
+ * @return array
+ */
+function field_block_for_acf_pro_build_display_label_field() {
+
+	$display_label=array(
+		"key"              =>"field_65c0af48ebef0",
+		"label"            =>"Display label",
+		"name"             =>"display-label",
+		"aria-label"       =>"",
+		"type"             =>"true_false",
+		"instructions"     =>"",
+		"required"         =>0,
+		"conditional_logic"=>0,
+		"wrapper"          => [
+			"width"=> "",
+			"class"=> "",
+			"id"=> ""
+		],
+		"message"=> "Select to display the field's label",
+		"default_value"=> 0,
+		"ui"=> 0,
+		"ui_on_text"=> "",
+		"ui_off_text"=> ""
+	);
+	return $display_label;
 }
