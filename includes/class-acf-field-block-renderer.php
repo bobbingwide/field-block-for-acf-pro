@@ -53,11 +53,11 @@ class acf_field_block_renderer
 			return;
 		}
 		if ( $this->post_id ) {
-			$this->field_info=get_field_object( $this->field_name, $this->post_id );
+			$this->get_field_object();
 		}
-		bw_trace2( $this->field_info, 'field_info', false);
+		//bw_trace2( $this->field_info, 'field_info', false);
         if (  $this->field_info) {
-            $this->field = get_field($this->field_name, $this->post_id);
+            $this->field = get_field($this->field_info['key'], $this->post_id);
             $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
             $this->render_acf_field_contents();
             echo '</div>';
@@ -66,6 +66,23 @@ class acf_field_block_renderer
         }
 
     }
+
+	/**
+	 * Gets the field info object.
+	 *
+	 * The given field name may consist of two halves.
+	 * eg `field_64ac359853cbf_field_64ac34578821f`
+	 * We take the last 19 digits to uniquely identify the field.
+	 * eg `_field_64ac34578821f`
+	 *
+	 * @return void
+	 */
+	function get_field_object() {
+		$field_key = substr( $this->field_name, -19 );
+		$this->field_info=get_field_object( $field_key, $this->post_id );
+		//bw_trace2( $this->field_info, 'field_info', false);
+	}
+
 
 	/**
 	 * Display a message if the field is not set.
