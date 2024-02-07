@@ -4,7 +4,7 @@ Donate link: https://www.oik-plugins.com/oik/oik-donate/
 Tags: ACF, field, block
 Requires at least: 6.2
 Tested up to: 6.4.3
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Features
 - Uses a single block – ACF field
 - The block can be used within the Query Loop
 - Most field types are rendered in the block editor.
+- Supports display of the field's label, if required.
 
 
 This plugin depends on Advanced Custom Fields PRO; it uses the plugin's server side rendering block logic.
@@ -59,10 +60,12 @@ https://developers.google.com/maps/documentation/javascript/get-api-key
 1. ACF field block - Settings
 
 == Upgrade Notice ==
+= 1.2.0 =
+Update for the option to display field labels.
+
 = 1.1.0 = 
 Updated following review by WordPress plugin review team. 
 
- 
 = 1.0.0 =
 First version for wordpress.org
 
@@ -76,6 +79,18 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 == Changelog ==
+= 1.2.0 =
+* Changed: Add support for displaying and styling the field's label #22
+* Changed: Update CSS for class name changes #20. 
+* Changed: Add support for Display label to Gallery field type #22
+* Changed: Sort field names and improve identification #23
+* Fixed: Re-enable display of seamless cloned fields #20
+* Tested: With WordPress 6.4.3 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.2.5
+* Tested: With Gutenberg 17.6.1
+* Tested: With PHP 8.3
+* Tested: With PHPUnit 9.6
+
 = 1.1.0 =
 * Added: Add PHPUnit tests for the image field type #15
 * Added: Add PHPUnit tests for the password field type #15
