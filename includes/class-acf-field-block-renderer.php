@@ -119,6 +119,10 @@ class acf_field_block_renderer
 			$classes = array_merge( $classes, [ 'has-text-align-' . $block['align'] ] );
 		}
 
+		if ( $this->display_label ) {
+			$classes[] = 'has-label';
+		}
+
         $classes = implode(' ', $classes);
         $anchor = $block['anchor'] ?? null;
         $wrapper_attributes = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor));
