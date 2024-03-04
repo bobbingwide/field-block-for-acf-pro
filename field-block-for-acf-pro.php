@@ -4,7 +4,7 @@ Plugin Name: Field block for ACF Pro
 Plugin URI: https://www.oik-plugins.com/oik-plugins/field-block-for-acf-pro
 Description: Displays ACF fields in a block
 Depends: advanced-custom-fields-pro
-Version: 1.2.0
+Version: 1.3.0
 Author: bobbingwide
 Author URI: https://bobbingwide.com/about-bobbing-wide
 Text Domain: field-block-for-acf-pro
@@ -36,10 +36,8 @@ if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 function field_block_for_acf_pro_acf_include_fields() {
 	$loaded = load_plugin_textdomain( 'field-block-for-acf-pro', false, 'field-block-for-acf-pro/languages' );
-	bw_trace2( $loaded, 'loaded?', false );
 	require_once __DIR__ . '/includes/acf-field-names.php';
 	$acf_field_name_field = field_block_for_acf_pro_build_acf_field_name_field();
-	bw_trace2( $acf_field_name_field, 'acf_field_name_field', false );
 	$display_label_field = field_block_for_acf_pro_build_display_label_field();
 	acf_add_local_field_group( array(
 			'key' => 'group_645f589a8cade',
@@ -77,7 +75,6 @@ function field_block_for_acf_pro_acf_include_fields() {
  */
 function field_block_for_acf_pro_register_blocks() {
 	$registered=register_block_type( __DIR__ . '/blocks/acf-field' );
-	bw_trace2( $registered, 'registered?', false );
 }
 
 /**
@@ -96,16 +93,6 @@ function field_block_for_acf_pro_plugin_loaded() {
 
 field_block_for_acf_pro_plugin_loaded();
 
-/**
- * The following are dummy functions that are required when the oik-bwtrace function
- * is not activated on the site. oik-bwtrace uses the bw_ prefix for these two functions.
- * oik-bwtrace and other plugins each check for the existance of the bw_trace2() function
- * before defining these 2 functions.
- */
-if ( !function_exists( "bw_trace2" ) ) {
-    function bw_trace2( $p=null ) { return $p; }
-    function bw_backtrace() {}
-}
 
 /**
  * May set the Google Maps API key.
@@ -113,6 +100,8 @@ if ( !function_exists( "bw_trace2" ) ) {
  * If there's a value passed then we don't need to override it.
  * The value may have come from a call to `acf_update_setting('google_api_key', $key);`
  * If not, and there's a value available elsewhere, we can try this.
+ *
+ * bw_get_option() is a function from the oik plugin.
  *
  * @param $api
  * @return $api

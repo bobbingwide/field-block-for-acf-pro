@@ -25,10 +25,6 @@ class acf_field_block_renderer
 
     function __construct($block, $content, $context, $is_preview, $post_id, $wp_block)
     {
-        bw_trace2( $block, "block", false );
-	    bw_trace2( $content, "content", false );
-		bw_trace2( $context, "context", false );
-	    bw_trace2( $post_id, "post_id", false );
         $this->block = $block;
         $this->content = $content;
         $this->context = $context;
@@ -45,9 +41,7 @@ class acf_field_block_renderer
     {
         $this->field_name = get_field('acf-field-name');
 		$this->display_label = get_field( 'display-label');
-	    bw_trace2( $this->field_name, 'field_name', false);
-		bw_trace2( $this->post_id, 'post id', false);
-        // We can't continue if the field name isn't set.
+	    // We can't continue if the field name isn't set.
 		if ( !$this->field_name ) {
 			$this->render_no_field_name();
 			return;
@@ -55,7 +49,7 @@ class acf_field_block_renderer
 		if ( $this->post_id ) {
 			$this->get_field_object();
 		}
-		//bw_trace2( $this->field_info, 'field_info', false);
+
         if (  $this->field_info) {
             $this->field = get_field($this->field_info['key'], $this->post_id);
             $this->render_acf_field_classes($this->field_name, $this->field_info['type'], $this->block);
@@ -80,7 +74,6 @@ class acf_field_block_renderer
 	function get_field_object() {
 		$field_key = substr( $this->field_name, -19 );
 		$this->field_info=get_field_object( $field_key, $this->post_id );
-		//bw_trace2( $this->field_info, 'field_info', false);
 	}
 
 
@@ -93,14 +86,15 @@ class acf_field_block_renderer
     function render_no_field_info() {
         echo '<p>';
 		/* Translators: 1 Field name, 2 Post ID */
-        printf( esc_html__( 'Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id );
+	    echo esc_html( sprintf( __('Field %1$s not set for post ID %2$d', 'acf-field-block'), $this->field_name, $this->post_id ));
         echo '</p>';
 
     }
 
 	function render_no_field_name() {
 		echo '<p>';
-		printf( esc_html__( 'Field name not found for post ID %1$d', 'acf-field-block'), $this->post_id );
+		/* Translators: post ID for which the field name cannot be found */
+		echo esc_html( sprintf( __('Field name not found for post ID %1$d', 'acf-field-block'), $this->post_id ));
 		echo '</p>';
 
 	}
@@ -125,11 +119,10 @@ class acf_field_block_renderer
 
         $classes = implode(' ', $classes);
         $anchor = $block['anchor'] ?? null;
-        $wrapper_attributes = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor));
         echo '<div ';
-        echo $wrapper_attributes;
+        echo get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo '>';
-        bw_trace2($wrapper_attributes, 'wrapper attributes');
+
     }
 
 
@@ -140,7 +133,6 @@ class acf_field_block_renderer
      */
     function get_renderer()
     {
-        //bw_trace2();
         $renderer = [$this, 'render_acf_field_block_' . $this->field_info['type']];
         $renderer = apply_filters('acf_field_block_get_renderer', $renderer, $this->field_info, $this->field);
         if (!is_callable($renderer)) {
@@ -202,13 +194,13 @@ class acf_field_block_renderer
     {
         $method = is_array($this->not_callable) ? get_class($this->not_callable[0]) . '::' . $this->not_callable[1] : $this->not_callable;
 		/* Translators: 1: Name of method/function to render the block. */
-        printf( esc_html__('Error: Render method not callable: %1$s', 'acf-field-block' ), $method);
+        echo esc_html( sprintf( __('Error: Render method not callable: %1$s', 'acf-field-block' ), $method) );
         echo '<br />';
 		/* Translators: 1: Name of the field being rendered. */
-        printf(esc_html__( 'Field: %1$s', 'acf-field-block'), $this->field_name);
+        echo esc_html( sprintf( __( 'Field: %1$s', 'acf-field-block'), $this->field_name) );
         echo '<br />';
 		/* Translators: 1: Type of the field being rendered. */
-        printf( esc_html__( 'Field type: %1$s', 'acf-field-block' ), $this->field_info['type'] );
+        echo esc_html( sprintf( __( 'Field type: %1$s', 'acf-field-block' ), $this->field_info['type'] ) );
     }
 
     /**
@@ -301,7 +293,6 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_image($field, $field_info, $post_id, $acf_field_block_class)
     {
-        bw_trace2( $field, 'field', false );
         // Allow for no selection.
         if (!$field) {
             return;
@@ -309,21 +300,19 @@ class acf_field_block_renderer
         switch ($field_info['return_format']) {
             case 'array':
                 $image_size = $field_info['preview_size'] ?? 'full';
-                $field_value = wp_get_attachment_image($field['ID'], $image_size);
-                echo $field_value;
+                //$field_value = wp_get_attachment_image($field['ID'], $image_size);
+                echo wp_get_attachment_image($field['ID'], $image_size);
                 break;
 
             case 'id':
                 $image_size = $field_info['preview_size'] ?? 'full';
-                $field_value = wp_get_attachment_image($field, $image_size);
-                echo $field_value;
+                echo wp_get_attachment_image($field, $image_size);
                 break;
 
             case 'url':
             default:
-                echo "<img src=\"$field\"/>";
+                echo '<img src="' .  esc_attr( $field ) . '"/>';
         }
-        //bw_format_attachment();_image
     }
 
     /**
@@ -393,7 +382,6 @@ class acf_field_block_renderer
         if ( !$field ) {
             return;
         }
-        //bw_trace2();
         switch ($field_info['return_format']) {
             case 'array':
                 echo '<a href="';
@@ -406,15 +394,16 @@ class acf_field_block_renderer
 
             case 'id':
                 $url = wp_get_attachment_url($field);
-                $url = esc_url($url);
-                echo "<a href=\"$url\">";
+                echo '<a href="' . esc_url( $url ) . '">';
 	            esc_html_e( 'Download File', 'acf-field-block' );
 				echo "</a>";
                 break;
 
             case 'url':
             default:
-                echo "<a href=\"$field\">";
+	            echo '<a href="';
+	            echo esc_url( $field );
+	            echo '">';
 	            esc_html_e( 'Download File', 'acf-field-block' );
 	            echo "</a>";
         }
@@ -434,7 +423,7 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_wysiwyg($field, $field_info, $post_id, $acf_field_block_class)
     {
-        echo $field;
+        echo $field; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         wp_enqueue_script('wp-embed');
     }
 
@@ -452,7 +441,7 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_oembed($field, $field_info, $post_id, $acf_field_block_class)
     {
-        echo $field;
+        echo $field; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         wp_enqueue_script('wp-embed');
     }
 
@@ -502,7 +491,6 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_select($field, $field_info, $post_id, $acf_field_block_class)
     {
-        bw_trace2();
         $value = null;
         switch ($field_info['return_format']) {
             case 'value':
@@ -726,9 +714,7 @@ class acf_field_block_renderer
         if (!$field) {
             return;
         }
-        //bw_trace2( $field, "field", true);
         $field = get_field($field_info['name'], $post_id, false);
-        //bw_trace2( $field, "field unformatted", true);
         $this->render_acf_field_block_post_object($field, $field_info, $post_id, $acf_field_block_class);
     }
 
@@ -750,9 +736,6 @@ class acf_field_block_renderer
             return;
         }
         $field_info['multiple'] = 1;
-        //bw_trace2( $field, "field", true);
-        //$field = get_field( $field_info['name'], $post_id, false );
-        //bw_trace2( $field, "field unformatted", true);
         $this->render_acf_field_block_post_object($field, $field_info, $post_id, $acf_field_block_class);
     }
 
@@ -773,7 +756,7 @@ class acf_field_block_renderer
         if (!$field) {
             return;
         }
-        bw_trace2();
+
         $terms = is_array($field) ? $field : [$field];
         // ACF doesn't correctly set the 'multiple' field.
         // So determine the value from the field type.
@@ -831,7 +814,7 @@ class acf_field_block_renderer
         if ( !$field ) {
             return;
         }
-        // bw_trace2();
+
         $multiple = $field_info['multiple'];
         if ($multiple) {
             echo '<ul>';
@@ -951,7 +934,7 @@ class acf_field_block_renderer
      */
     function render_acf_field_block_color_picker($field, $field_info, $post_id, $acf_field_block_class) {
         $field = is_array( $field) ? 'rgba(' . implode( ',', $field) . ')': $field;
-        echo '<span style="background-color: ' . $field . ';">';
+        echo '<span style="background-color: ' . esc_attr( $field ) . ';">';
         echo '&nbsp;</span>&nbsp;';
         echo esc_html( $field );
     }
@@ -971,9 +954,6 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_group($field, $field_info, $post_id, $acf_field_block_class) {
-        bw_trace2( $field, "field", false );
-        bw_trace2( $field_info, "field_info", false );
-        //echo esc_html( $field_info['name'] );
         foreach ( $field_info['sub_fields'] as $sub_field_info ) {
             $this->field_name = $sub_field_info['name'];
             //echo $this->field_name;
@@ -1003,10 +983,6 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_repeater($field, $field_info, $post_id, $acf_field_block_class) {
-        bw_trace2( $field, "field", false );
-        bw_trace2( $field_info, "field_info", false );
-        //echo esc_html( $field_info['name'] );
-        //echo $this->field_name;
         if ( $field && count( $field ) ) {
             echo '<ul>';
             foreach ($field as $row) {
@@ -1045,9 +1021,6 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_flexible_content($field, $field_info, $post_id, $acf_field_block_class) {
-        bw_trace2( $field, "field", false );
-        bw_trace2( $field_info, "field_info", false );
-
         foreach ( $field as $section ) {
             $layout_name = $section['acf_fc_layout'];
             echo '<div class="' . esc_attr( $layout_name ) . '">';
@@ -1108,15 +1081,13 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_clone( $field, $field_info, $post_id, $acf_field_block_class) {
-        bw_trace2( $field, "field", false );
-        bw_trace2( $field_info, "field_info", false );
         $this->render_layout( $field_info, $field );
     }
 
     /**
      * Displays an ACF google_map field.
      *
-     * @link https://www.advancedcustomfields.com/resources/google_map
+     * @link https://www.advancedcustomfields.com/resources/google-map
      *
      * @param $field
      * @param $field_info
@@ -1125,23 +1096,19 @@ class acf_field_block_renderer
      * @return void
      */
     function render_acf_field_block_google_map( $field, $field_info, $post_id, $acf_field_block_class) {
-        //bw_trace2( $field, "field", false );
-        //bw_trace2( $field_info, "field_info", false );
-        //echo esc_html( $field_info['name'] );
-        // script
         $api = [];
         $api = apply_filters( 'acf/fields/google_map/api', $api );
-        // bw_trace2( $api, "api", false );
         if ( $api['key']) {
             //echo '<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=Function.prototype"></script>';
-            wp_enqueue_script('acf-field-google_map', plugin_dir_url( __FILE__ ) . '/acf-field-google_map.js', array('jquery'));
+	        $version = filemtime( plugin_dir_path( __FILE__ ) . '/acf-field-google_map.js' );
+            wp_enqueue_script('acf-field-google_map', plugin_dir_url( __FILE__ ) . '/acf-field-google_map.js', array('jquery'), $version , true );
             wp_enqueue_script('acf-field_google-maps',
                 sprintf('https://maps.googleapis.com/maps/api/js?key=%s&callback=Function.prototype', $api['key'] ),
                 [
                     // setup deps, to make sure loaded only after plugin's maps.min.js
                     'acf-field-google_map'
                 ],
-                null,
+                null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
                 true
             );
         } else {
@@ -1161,9 +1128,9 @@ class acf_field_block_renderer
         if ( $lat && $lng ) {
             $marker_html = $field['address'] ?? '';
             $zoom = $field['zoom'] ?? 14;
-            echo '<div class="acf-map" data-zoom="' . $zoom . '">';
+            echo '<div class="acf-map" data-zoom="' . esc_attr( $zoom ) . '">';
             echo '<div class="marker" data-lat="' . esc_attr($lat) . '" data-lng="' . esc_attr($lng ) . '">';
-            echo $marker_html;
+            echo wp_kses( $marker_html );
             echo '</div>';
             echo '</div>';
         }

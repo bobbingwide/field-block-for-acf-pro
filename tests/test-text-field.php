@@ -167,7 +167,7 @@ class Tests_text_field extends BW_UnitTestCase {
 
 	function update_post_meta( $field_name, $field_value ) {
 		global $post;
-		bw_trace2( $post, "post" );
+		//bw_trace2( $post, "post" );
 		$result = update_post_meta( $post->ID, $field_name, $field_value );
 		// Some updates return true others false. It depends on the new value.
 		//bw_trace2( $result, 'result');

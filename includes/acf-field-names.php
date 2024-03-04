@@ -24,19 +24,14 @@ if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id ) {
 	$field_groups = acf_get_field_groups();
-	//bw_trace2($field_groups, 'field groups', false );
 	$fields = [];
 	foreach ( $field_groups as $field_group ) {
 		if ( $field_group['active']) {
 			// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
 			$post_types=field_block_for_acf_pro_process_field_group( $field_group );
 			if ( $post_types ) {
-				//bw_trace2( $field_group, 'field_group', false );
 				$raw_fields=acf_get_fields( $field_group['ID'] );
-				//bw_trace2( $raw_fields, 'raw_fields', false );
 				foreach ( $raw_fields as $raw_field ) {
-					bw_trace2( '?' . $raw_field['name'] . '?', 'raw_field name', false );
-					//bw_trace2( $raw_field, 'raw_field', false );
 					if ( ! empty( $raw_field['name'] ) ) {
 						$field_select_label  =[];
 						$field_select_label[]=$raw_field['label'];
@@ -51,15 +46,14 @@ function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id
 						}
 						$fields[ $raw_field['key'] ]=implode( ' ', $field_select_label );
 					} else {
-						//bw_trace2( $raw_field, "unnamed raw_field", false);
+
 					}
 				}
 			}
 		}
 	}
 	asort( $fields );
-    //bw_trace2( $fields, "?fields", false );
-	return $fields;
+    return $fields;
 }
 
 /**
@@ -104,10 +98,7 @@ function field_block_for_acf_pro_process_field_group( $field_group ) {
 				$post_type = get_post_type_object( $rule['value']);
 				$not = ( '!=' === $rule['operator'] ) ? '!' : '';
 				/* Note: The post type may not be registered yet. */
-
-				//bw_trace2( $rule, 'rule', false );
 				if ( $post_type ) {
-					//bw_trace2( $post_type, 'post_type' );
 					$post_types[] = $not . $post_type->label;
 				} else {
 					$post_types[] = $not . $rule['value'];
@@ -116,28 +107,6 @@ function field_block_for_acf_pro_process_field_group( $field_group ) {
 		}
 	}
 	return implode( ',', $post_types );
-}
-
-/**
- * Lists the possible ACF field names.
- *
- * The logic should cater for:
- * - fields that are defined for use in multiple post types,
- * - posts, taxonomies, users
- * - but not blocks
- * - what about nested field group structures?
- * - or fields which are local?
- *
- * @param $field_name
- * @param $post_id
- *
- * @return void
- */
-function field_block_for_acf_pro_list_possible_field_names( $field_name, $post_id ) {
-	$field_names = field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id );
-	foreach ( $field_names as $name => $value ) {
-		echo "<br />$name $value";
-	}
 }
 
 /**
