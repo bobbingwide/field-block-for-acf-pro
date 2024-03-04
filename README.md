@@ -5,12 +5,13 @@
 * Tags: ACF, field, block
 * Requires at least: 6.2
 * Tested up to: 6.4.3
-* Stable tag: 1.2.0
+* Stable tag: 1.3.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-## Description 
 No code solution to display ACF fields using the ACF field block.
+
+## Description 
 The ACF field block displays individual fields registered using ACF.
 
 It supports the following field types:
@@ -61,6 +62,9 @@ https://developers.google.com/maps/documentation/javascript/get-api-key
 1. ACF field block - Settings
 
 ## Upgrade Notice 
+# 1.3.0 
+Improved security using escaping functions. Removal of calls to trace logic.
+
 # 1.2.0 
 Update for the option to display field labels.
 
@@ -80,6 +84,10 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 ## Changelog 
+# 1.3.0 
+* Changed: Satisfy plugin-check's tests.
+* Deleted: Removed calls to trace functions.
+
 # 1.2.0 
 * Changed: Add support for displaying and styling the field's label #22
 * Changed: Update CSS for class name changes #20.
