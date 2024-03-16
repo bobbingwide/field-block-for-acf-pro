@@ -4,8 +4,8 @@
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: ACF, field, block
 * Requires at least: 6.2
-* Tested up to: 6.4.3
-* Stable tag: 1.3.0
+* Tested up to: 6.5-RC2
+* Stable tag: 1.3.1
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,16 +30,14 @@ Features
 - Most field types are rendered in the block editor.
 - Supports display of the field's label, if required.
 
-
 This plugin depends on Advanced Custom Fields PRO; it uses the plugin's server side rendering block logic.
-
+If ACF PRO is not activated then the ACF field block will not be registered.
 
 For PHP developers
 The extensible architecture allows:
 - overrides to rendering logic by field type,
 - rendering for custom field types,
 - rendering for custom field names
-
 
 If you want to alter the output from the `acf-field-block/acf-field` block
 then you can either hook into the `render_block_acf-field-block/acf-field` filter to
@@ -52,9 +50,9 @@ The Google Map field requires an API key which you can obtain from
 https://developers.google.com/maps/documentation/javascript/get-api-key
 
 ## Installation 
-1. Upload the contents of the acf-field-block plugin to the `/wp-content/plugins/acf-field-block' directory
-1. Activate the acf-field-block plugin through the 'Plugins' menu in WordPress
-1. Use the ACF field block
+1. Upload the contents of the field-block-for-acf-pro plugin to the `/wp-content/plugins/field-block-for-acf-pro' directory
+1. Activate the field-block-for-acf-pro plugin through the 'Plugins' menu in WordPress
+1. Use the ACF field block in the block editor
 
 ## Screenshots 
 1. ACF field block - Edit mode
@@ -62,94 +60,15 @@ https://developers.google.com/maps/documentation/javascript/get-api-key
 1. ACF field block - Settings
 
 ## Upgrade Notice 
-# 1.3.0 
-Improved security using escaping functions. Removal of calls to trace logic.
-
-# 1.2.0 
-Update for the option to display field labels.
-
-# 1.1.0 
-Updated following review by WordPress plugin review team.
-
-# 1.0.0 
-First version for wordpress.org
-
-# 0.2.0 
-Update for center alignment support and link colors
-
-# 0.1.1 
-Internationalized and localized for UK English.
-
-# 0.1.0 
-No code solution to display ACF Fields using the ACF field block
+# 1.3.1 
+Tested with WordPress 6.5-RC2 and Advanced Custom Fields Pro v6.2.7
 
 ## Changelog 
-# 1.3.0 
-* Changed: Satisfy plugin-check's tests.
-* Deleted: Removed calls to trace functions.
-
-# 1.2.0 
-* Changed: Add support for displaying and styling the field's label #22
-* Changed: Update CSS for class name changes #20.
-* Changed: Add support for Display label to Gallery field type #22
-* Changed: Sort field names and improve identification #23
-* Fixed: Re-enable display of seamless cloned fields #20
-* Tested: With WordPress 6.4.3 and WordPress Multisite
-* Tested: With Advanced Custom Fields PRO v6.2.5
-* Tested: With Gutenberg 17.6.1
+# 1.3.1 
+* Changed: Updated screenshots
+* Fixed: Correct pass $field_group structure to acf_get_fields() #24
+* Tested: With WordPress 6.5-RC2 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.2.7
+* Tested: With Gutenberg 17.9.0
 * Tested: With PHP 8.3
 * Tested: With PHPUnit 9.6
-
-# 1.1.0 
-* Added: Add PHPUnit tests for the image field type #15
-* Added: Add PHPUnit tests for the password field type #15
-* Changed: Document use of maps.googleapis.com for Google Map field #21
-* Changed: Improve output field security #21
-* Changed: Rename function prefix to field_block_for_acf_pro_ #21
-* Changed: exit if accessed directly #21
-* Changed: Tidy up tests a bit. Add README.md #15
-* Tested: With WordPress 6.4.3 and WordPress Multisite
-* Tested: With Advanced Custom Fields PRO v6.2.5
-* Tested: With Gutenberg 17.6.0
-* Tested: With PHP 8.3
-* Tested: With PHPUnit 9.6
-
-# 1.0.0 
-* Changed: Renamed for wordpress.org #18
-* Changed: Support for PHP 8.1 and PHP 8.2 #19
-* Tested: With WordPress 6.4-RC3 and WordPress Multisite
-* Tested: With Advanced Custom Fields PRO v6.2.2
-* Tested: With Gutenberg 16.9.0
-* Tested: With PHP 8.0, PHP 8.1 and PHP 8.2
-* Tested: With PHPUnit 9.6
-
-# 0.2.0 
-* Changed: Support the align attribute #12
-* Changed: Enable link colors #1
-
-# 0.1.1 
-* Changed: Internationalize and localize into UK English and bb_BB locale #11
-
-# 0.1.0 
-* Added: google_map field type #10
-* Changed: Don't handle fields with no name #3
-* Changed: Set list-style:none for gallery list items
-* Added: clone field type #9
-* Changed: Set Google Maps API key from oik options if available and not already set #10
-* Added: flexible_content field type #6
-* Added: Add render_no_field_info() method. #7
-* Added: group field type #4
-* Added: repeater field type #5
-* Changed: Cater for field;s with no value #7
-* Added: Add date_picker, date_time_picker, time_picker, color_picker #1
-* Added: Add render_acf_field_block_user to display user's display name #1
-* Changed: Refactor to use methods. Allow extensibility using acf_field_block_get_renderer filter #1
-* Changed: Refactor to use acf_field_block_renderer class #1
-* Changed: Improve comments, cater for missing oik-bwtrace functions #1
-
-# 0.0.0 
-* Changed: Refactored to acf-field block ( acf-field/acf-field ) #1
-* Added: Created from oik-testimonials ( commit 6b2d92c ) #1
-* Tested: With WordPress 6.2.2 and WordPress Multi Site
-* Tested: With Advanced Custom Fields PRO v6.1.6
-* Tested: With PHP 8
