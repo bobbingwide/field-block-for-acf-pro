@@ -30,7 +30,7 @@ function field_block_for_acf_pro_get_possible_field_names( $field_name, $post_id
 			// Only process field groups which include Location Rules involving post_type. ie exclude those defined for Blocks
 			$post_types=field_block_for_acf_pro_process_field_group( $field_group );
 			if ( $post_types ) {
-				$raw_fields=acf_get_fields( $field_group['ID'] );
+				$raw_fields=acf_get_fields( $field_group );
 				foreach ( $raw_fields as $raw_field ) {
 					if ( ! empty( $raw_field['name'] ) ) {
 						$field_select_label  =[];
