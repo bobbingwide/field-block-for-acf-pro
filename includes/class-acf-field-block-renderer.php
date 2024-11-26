@@ -1130,7 +1130,7 @@ class acf_field_block_renderer
             $zoom = $field['zoom'] ?? 14;
             echo '<div class="acf-map" data-zoom="' . esc_attr( $zoom ) . '">';
             echo '<div class="marker" data-lat="' . esc_attr($lat) . '" data-lng="' . esc_attr($lng ) . '">';
-            echo wp_kses( $marker_html );
+            echo wp_kses( $marker_html, 'strip' );
             echo '</div>';
             echo '</div>';
         }
