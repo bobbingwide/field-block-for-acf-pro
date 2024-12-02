@@ -4,7 +4,7 @@ Plugin Name: Field block for ACF Pro
 Plugin URI: https://www.oik-plugins.com/oik-plugins/field-block-for-acf-pro
 Description: Displays ACF fields in a block
 Depends: advanced-custom-fields-pro
-Version: 1.3.1
+Version: 1.4.0
 Author: bobbingwide
 Author URI: https://bobbingwide.com/about-bobbing-wide
 Text Domain: field-block-for-acf-pro

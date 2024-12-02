@@ -4,8 +4,8 @@
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: ACF, field, block
 * Requires at least: 6.2
-* Tested up to: 6.5-RC2
-* Stable tag: 1.3.1
+* Tested up to: 6.7.1
+* Stable tag: 1.4.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,15 +60,17 @@ https://developers.google.com/maps/documentation/javascript/get-api-key
 1. ACF field block - Settings
 
 ## Upgrade Notice 
-# 1.3.1 
-Tested with WordPress 6.5-RC2 and Advanced Custom Fields Pro v6.2.7
+
+# 1.4.0 
+Tested with WordPress 6.7.1, and Advanced Custom Fields Pro v6.3.11, PHP 8.4 and PHPUnit 10 & 11
 
 ## Changelog 
-# 1.3.1 
-* Changed: Updated screenshots
-* Fixed: Correct pass $field_group structure to acf_get_fields() #24
-* Tested: With WordPress 6.5-RC2 and WordPress Multisite
-* Tested: With Advanced Custom Fields PRO v6.2.7
-* Tested: With Gutenberg 17.9.0
-* Tested: With PHP 8.3
-* Tested: With PHPUnit 9.6
+# 1.4.0 
+* Changed: Update tests for PHPUnit 10 & 11 #27
+* Changed: Update tests for WordPress 6.7.1 and ACF PRO 6.3.11 #27
+* Changed: Add 'strip' parameter to wp_kses() #19
+* Tested: With WordPress 6.7.1 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.3.1
+* Tested: With Gutenberg 19.7.0
+* Tested: With PHP 8.3 & 8.4
+* Tested: With PHPUnit 10 & 11

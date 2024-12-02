@@ -1,4 +1,7 @@
 == Upgrade Notice ==
+= 1.3.1 = 
+Tested with WordPress 6.5-RC2 and Advanced Custom Fields Pro v6.2.7
+
 = 1.3.0 = 
 Improved security using escaping functions. Removal of calls to trace logic.
 
@@ -21,6 +24,15 @@ Internationalized and localized for UK English.
 No code solution to display ACF Fields using the ACF field block
 
 == Changelog ==
+= 1.3.1 = 
+* Changed: Updated screenshots
+* Fixed: Correct pass $field_group structure to acf_get_fields() #24
+* Tested: With WordPress 6.5-RC2 and WordPress Multisite
+* Tested: With Advanced Custom Fields PRO v6.2.7
+* Tested: With Gutenberg 17.9.0
+* Tested: With PHP 8.3
+* Tested: With PHPUnit 9.6
+
 = 1.3.0 = 
 * Changed: Satisfy plugin-check's tests. 
 * Deleted: Removed calls to trace functions.
