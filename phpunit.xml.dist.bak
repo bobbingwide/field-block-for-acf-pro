@@ -1,0 +1,14 @@
+<phpunit
+        bootstrap="../../plugins/oik-batch/oik-wp.php"
+        backupGlobals="false"
+        colors="false"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+>
+    <testsuites>
+        <testsuite name="field-block-for-acf-pro">
+            <directory prefix="Tests_" suffix=".php">tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
