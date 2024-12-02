@@ -104,6 +104,7 @@ class acf_field_block_renderer
      */
     function render_acf_field_classes($field_name, $field_type, $block)
     {
+
         $classes = ['acf-field-' . $field_name];
         $classes[] = 'acf-type-' . $field_type;
         if (!empty($block['className'])) {
@@ -118,9 +119,12 @@ class acf_field_block_renderer
 		}
 
         $classes = implode(' ', $classes);
+	    ///bw_trace2( $classes, 'classes');
         $anchor = $block['anchor'] ?? null;
         echo '<div ';
-        echo get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$attrs = get_block_wrapper_attributes(array('class' => trim($classes), 'id' => $anchor)); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	    //bw_trace2( $attrs, "attrs", false );
+	    echo $attrs;
         echo '>';
 
     }
